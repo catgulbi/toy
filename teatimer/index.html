@@ -1,446 +1,476 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
--gradient(circle at top left, rgba(205,226,199,0.45), transparent 28%),<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        linear-gradient(180deg, #f7f3ef 0%, #f9f6f1 100%);
-    color: var(--text);
+<meta charset="UTF-8">
+<meta name><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --bg: #f7f3ef;
+  --card: #ffffff;
+  --green: #cde2c7;
+  --green-deep: #5f7f63;
+  --green-soft: #eef7eb;
+  --green-soft-2: #f6fbf4;
+  --text: #3f4a3f;
+  --muted: #7b8278;
+  --line: #e7ebe3;
+  --shadow: 0 10px 28px rgba(85, 105, 82, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(205, 226, 199, 0.45), transparent 28%),
+    linear-gradient(180deg, #f7f3ef 0%, #f9f6f1 100%);
 }
 
 .container {
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .card {
-    background: rgba(255,255,255,0.94);
-    border: 1px solid rgba(205,226,199,0.45);
-    border-radius: 24px;
-    padding: 20px;
-    margin-bottom: 18px;
-    box-shadow: var(--shadow);
-    text-align: center;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(205, 226, 199, 0.45);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow);
+  text-align: center;
 }
 
 .header-title {
-    margin: 2px 0 8px;
-    font-size: 27px;
-    letter-spacing: -0.4px;
+  margin: 2px 0 8px;
+  font-size: 27px;
+  letter-spacing: -0.4px;
 }
 
 .guide {
-    margin: 0;
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.55;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 .infusion-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 16px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
 }
 
 .infusion-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 13px;
-    border-radius: 999px;
-    background: var(--green-soft);
-    color: var(--green-deep);
-    font-size: 14px;
-    font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: var(--green-soft);
+  color: var(--green-deep);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .session-mini {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: #fbfaf7;
-    border: 1px solid var(--line);
-    color: #8a9187;
-    font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fbfaf7;
+  border: 1px solid var(--line);
+  color: #8a9187;
+  font-size: 11px;
 }
 
 .mini-btn {
-    padding: 7px 10px;
-    font-size: 12px;
-    border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 12px;
+  border-radius: 999px;
 }
 
 .timer {
-    font-size: 58px;
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin: 18px 0 12px;
-    color: #334236;
+  font-size: 58px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 18px 0 12px;
+  color: #334236;
 }
 
 .progress {
-    height: 10px;
-    background: #edf0ea;
-    border-radius: 999px;
-    overflow: hidden;
-    margin: 8px 0 18px;
+  height: 10px;
+  background: #edf0ea;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 8px 0 18px;
 }
 
 .progress-bar {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #b9d9b5, #d8ecd2);
-    border-radius: 999px;
-    transition: width 0.25s ease;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #b9d9b5, #d8ecd2);
+  border-radius: 999px;
+  transition: width 0.25s ease;
 }
 
 .preset-scroll {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 2px 2px 10px;
-    margin: 0 -2px 10px;
-    scrollbar-width: none;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 10px;
+  margin: 0 -2px 10px;
+  scrollbar-width: none;
 }
 
 .preset-scroll::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .preset-btn {
-    flex: 0 0 auto;
-    padding: 8px 11px;
-    border-radius: 999px;
-    background: #f8fbf6;
-    border: 1px solid var(--line);
-    color: #58705a;
-    font-size: 12.5px;
-    font-weight: 700;
-    white-space: nowrap;
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: #f8fbf6;
+  border: 1px solid var(--line);
+  color: #58705a;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .preset-btn.active {
-    background: var(--green);
-    border-color: #bad6b6;
-    color: #34573a;
-    box-shadow: 0 5px 14px rgba(104, 133, 101, 0.18);
+  background: var(--green);
+  border-color: #bad6b6;
+  color: #34573a;
+  box-shadow: 0 5px 14px rgba(104, 133, 101, 0.18);
 }
 
-.timer-controls,
-.adjust-controls {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 8px;
+.adjust-controls,
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
 }
 
 button {
-    padding: 11px 15px;
-    border: none;
-    border-radius: 999px;
-    background: var(--green);
-    color: #38573c;
-    cursor: pointer;
-    transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
-    font-weight: 700;
+  padding: 11px 15px;
+  border: none;
+  border-radius: 999px;
+  background: var(--green);
+  color: #38573c;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
 button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(84,105,80,0.16);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(84, 105, 80, 0.16);
 }
 
 button:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 .secondary-btn {
-    background: #f1f6ef;
-    color: #5f7f63;
+  background: #f1f6ef;
+  color: #5f7f63;
 }
 
 .instant-btn {
-    display: none;
-    background: #e7f3df;
-    color: #466c45;
-    border: 1px solid #c9e1c2;
+  display: none;
+  background: #e7f3df;
+  color: #466c45;
+  border: 1px solid #c9e1c2;
 }
 
 .instant-btn.show {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .alert {
-    display: inline-block;
-    margin-top: 14px;
-    padding: 9px 13px;
-    border-radius: 999px;
-    background: #f0f8ed;
-    color: #5f7f63;
-    font-weight: 800;
-    animation: softPop 0.45s ease;
+  display: inline-block;
+  margin-top: 14px;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: #f0f8ed;
+  color: #5f7f63;
+  font-weight: 800;
+  animation: softPop 0.45s ease;
 }
 
 @keyframes softPop {
-    0% { transform: scale(0.88); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.88);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .form-card {
-    text-align: left;
+  text-align: left;
 }
 
 .section-title {
-    margin: 0 0 12px;
-    font-size: 18px;
-    color: #405344;
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #405344;
 }
 
 .form-grid {
-    display: grid;
-    gap: 12px;
+  display: grid;
+  gap: 12px;
 }
 
 .field label {
-    display: block;
-    margin-bottom: 6px;
-    color: #6f786c;
-    font-size: 13px;
-    font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+  color: #6f786c;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 input,
 textarea,
 select {
-    width: 100%;
-    padding: 12px 13px;
-    border-radius: 14px;
-    border: 1px solid var(--line);
-    background: #fbfaf7;
-    color: var(--text);
-    font-size: 14px;
-    transition: border 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+  width: 100%;
+  padding: 12px 13px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #fbfaf7;
+  color: var(--text);
+  font-size: 14px;
+  transition: border 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
 textarea {
-    min-height: 94px;
-    resize: vertical;
-    line-height: 1.5;
+  min-height: 94px;
+  resize: vertical;
+  line-height: 1.5;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    outline: none;
-    border-color: #b8d8b2;
-    box-shadow: 0 0 0 3px rgba(205,226,199,0.45);
-    background: #ffffff;
+  outline: none;
+  border-color: #b8d8b2;
+  box-shadow: 0 0 0 3px rgba(205, 226, 199, 0.45);
+  background: #ffffff;
 }
 
 .inline-fields {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
 }
 
 .custom-temp {
-    display: none;
-    margin-top: 8px;
+  display: none;
+  margin-top: 8px;
 }
 
 .custom-temp.show {
-    display: block;
+  display: block;
 }
 
 .readonly-input {
-    background: #f3f7f0;
-    color: #5f7f63;
-    font-weight: 700;
+  background: #f3f7f0;
+  color: #5f7f63;
+  font-weight: 700;
 }
 
 .share-btn {
-    width: 100%;
-    margin-top: 14px;
-    padding: 13px 16px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px 16px;
 }
 
 .hint {
-    margin: 9px 0 0;
-    color: #8a9187;
-    font-size: 12px;
-    line-height: 1.45;
+  margin: 9px 0 0;
+  color: #8a9187;
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .logs-card {
-    text-align: left;
+  text-align: left;
 }
 
 .logs-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .logs-title {
-    margin: 0;
-    font-size: 18px;
+  margin: 0;
+  font-size: 18px;
 }
 
 .log-list {
-    display: grid;
-    gap: 12px;
+  display: grid;
+  gap: 12px;
 }
 
 .empty {
-    padding: 16px;
-    border-radius: 18px;
-    background: #fbfaf7;
-    color: #8a9187;
-    text-align: center;
-    font-size: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #fbfaf7;
+  color: #8a9187;
+  text-align: center;
+  font-size: 14px;
 }
 
 .session-card {
-    padding: 16px;
-    border-radius: 22px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,253,248,0.96));
-    border: 1px solid var(--line);
-    box-shadow: 0 8px 18px rgba(86,110,82,0.08);
+  padding: 16px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 253, 248, 0.96));
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 18px rgba(86, 110, 82, 0.08);
 }
 
 .session-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding-bottom: 12px;
-    margin-bottom: 12px;
-    border-bottom: 1px dashed #dce7d7;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed #dce7d7;
 }
 
 .session-title-wrap {
-    min-width: 0;
+  min-width: 0;
 }
 
 .session-name {
-    font-weight: 850;
-    color: #3f5f43;
-    font-size: 15px;
-    margin-bottom: 4px;
+  font-weight: 850;
+  color: #3f5f43;
+  font-size: 15px;
+  margin-bottom: 4px;
 }
 
 .session-tea {
-    color: #5d6b59;
-    font-size: 13px;
-    line-height: 1.35;
-    word-break: break-word;
+  color: #5d6b59;
+  font-size: 13px;
+  line-height: 1.35;
+  word-break: break-word;
 }
 
 .session-time {
-    flex: 0 0 auto;
-    color: #8c9388;
-    font-size: 12px;
-    white-space: nowrap;
+  flex: 0 0 auto;
+  color: #8c9388;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .infusion-list {
-    display: grid;
-    gap: 8px;
+  display: grid;
+  gap: 8px;
 }
 
 .infusion-line {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 9px 10px;
-    border-radius: 15px;
-    background: var(--green-soft-2);
-    border: 1px solid rgba(205,226,199,0.45);
-    line-height: 1.48;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 15px;
+  background: var(--green-soft-2);
+  border: 1px solid rgba(205, 226, 199, 0.45);
+  line-height: 1.48;
 }
 
 .infusion-dot {
-    flex: 0 0 auto;
-    color: #8bb486;
-    font-weight: 900;
-    line-height: 1.45;
+  flex: 0 0 auto;
+  color: #8bb486;
+  font-weight: 900;
+  line-height: 1.45;
 }
 
 .infusion-text {
-    min-width: 0;
-    color: #4a5448;
-    font-size: 14px;
-    word-break: break-word;
+  min-width: 0;
+  color: #4a5448;
+  font-size: 14px;
+  word-break: break-word;
 }
 
 .infusion-text strong {
-    color: #496d4b;
+  color: #496d4b;
 }
 
 .session-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 12px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
 }
 
 .meta-chip {
-    display: inline-flex;
-    padding: 5px 9px;
-    border-radius: 999px;
-    background: #f0f7ed;
-    color: #638265;
-    font-size: 12px;
-    font-weight: 700;
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #f0f7ed;
+  color: #638265;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .session-id-chip {
-    color: #a0a69c;
-    font-size: 11px;
+  color: #a0a69c;
+  font-size: 11px;
 }
 
 @media (max-width: 520px) {
-    .inline-fields {
-        grid-template-columns: 1fr;
-    }
+  .inline-fields {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 420px) {
-    .container {
-        padding: 14px;
-    }
+  .container {
+    padding: 14px;
+  }
 
-    .card {
-        padding: 17px;
-        border-radius: 22px;
-    }
+  .card {
+    padding: 17px;
+    border-radius: 22px;
+  }
 
-    .timer {
-        font-size: 50px;
-    }
+  .timer {
+    font-size: 50px;
+  }
 
-    button {
-        padding: 10px 13px;
-    }
+  button {
+    padding: 10px 13px;
+  }
 
-    .session-header {
-        flex-direction: column;
-        gap: 6px;
-    }
+  .session-header {
+    flex-direction: column;
+    gap: 6px;
+  }
 
-    .session-time {
-        white-space: normal;
-    }
+  .session-time {
+    white-space: normal;
+  }
 }
 </style>
 </head>
@@ -448,133 +478,133 @@ select:focus {
 <body>
 <div class="container">
 
-    <section class="card">
-        <h1 class="header-title">🍵 Tea Timer</h1>
-        <p class="guide">
-            시간을 조절하고 Start를 누르면 차 우리기가 시작됩니다 🍃<br>
-            아래에 나만의 차 기록을 친구들과 공유해보세요
-        </p>
+  <section class="card">
+    <h1 class="header-title">🍵 Tea Timer</h1>
+    <p class="guide">
+      시간을 조절하고 Start를 누르면 차 우리기가 시작됩니다 🍃<br>
+      아래에 나만의 차 기록을 친구들과 공유해보세요
+    </p>
 
-        <div class="infusion-row">
-            <span class="infusion-badge" id="infusionDisplay">현재 회차: 1회</span>
-            <button class="mini-btn secondary-btn" id="decreaseInfusionBtn" type="button">-</button>
-            <button class="mini-btn secondary-btn" id="increaseInfusionBtn" type="button">+</button>
-            <button class="mini-btn secondary-btn" id="resetInfusionBtn" type="button">새로운 차 시작</button>
+    <div class="infusion-row">
+      <span class="infusion-badge" id="infusionDisplay">현재 회차: 1회</span>
+      <button class="mini-btn secondary-btn" id="decreaseInfusionBtn" type="button">-</button>
+      <button class="mini-btn secondary-btn" id="increaseInfusionBtn" type="button">+</button>
+      <button class="mini-btn secondary-btn" id="resetInfusionBtn" type="button">새로운 차 시작</button>
+    </div>
+
+    <div class="session-mini" id="sessionDisplay">현재 찻자리 준비 중</div>
+
+    <div class="timer" id="timeDisplay">03:00</div>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="preset-scroll" id="presetList">
+      <button class="preset-btn" type="button" data-preset="black">홍차</button>
+      <button class="preset-btn" type="button" data-preset="youngWhite">어린 백차</button>
+      <button class="preset-btn" type="button" data-preset="agedWhite">노백차</button>
+      <button class="preset-btn" type="button" data-preset="taiwanOolong">대만 우롱차</button>
+      <button class="preset-btn" type="button" data-preset="rockTea">암차</button>
+      <button class="preset-btn" type="button" data-preset="puer">보이차</button>
+    </div>
+
+    <div class="adjust-controls">
+      <button id="minusBtn" type="button">-10초</button>
+      <button id="plusBtn" type="button">+10초</button>
+      <button id="instantPourBtn" class="instant-btn" type="button">즉시 출수</button>
+    </div>
+
+    <div class="timer-controls">
+      <button id="startBtn" type="button">Start</button>
+      <button id="pauseBtn" type="button" class="secondary-btn">Pause</button>
+      <button id="resetBtn" type="button" class="secondary-btn">Reset</button>
+    </div>
+
+    <div id="alert"></div>
+  </section>
+
+  <section class="card form-card">
+    <h2 class="section-title">Tea Log</h2>
+
+    <div class="form-grid">
+      <div class="field">
+        <label for="nickname">닉네임</label>
+        <input id="nickname" placeholder="이름을 입력해주세요">
+      </div>
+
+      <div class="field">
+        <label for="teaName">차 이름</label>
+        <input id="teaName" placeholder="예: 2026년 백호은침, 대홍포, 보이차">
+      </div>
+
+      <div class="inline-fields">
+        <div class="field">
+          <label for="waterTemp">물 온도</label>
+          <select id="waterTemp">
+            <option value="85°C">85°C</option>
+            <option value="90°C">90°C</option>
+            <option value="100°C">100°C</option>
+            <option value="custom">직접 입력</option>
+          </select>
+          <input id="customTemp" class="custom-temp" placeholder="예: 92°C">
         </div>
 
-        <div class="session-mini" id="sessionDisplay">현재 찻자리 준비 중</div>
-
-        <div class="timer" id="timeDisplay">03:00</div>
-
-        <div class="progress">
-            <div class="progress-bar" id="progressBar"></div>
+        <div class="field">
+          <label for="logInfusion">기록 회차</label>
+          <input id="logInfusion" class="readonly-input" readonly>
         </div>
 
-        <div class="preset-scroll" id="presetList">
-            <button class="preset-btn" type="button" data-preset="black">홍차</button>
-            <button class="preset-btn" type="button" data-preset="youngWhite">어린 백차</button>
-            <button class="preset-btn" type="button" data-preset="agedWhite">노백차</button>
-            <button class="preset-btn" type="button" data-preset="taiwanOolong">대만 우롱차</button>
-            <button class="preset-btn" type="button" data-preset="rockTea">암차</button>
-            <button class="preset-btn" type="button" data-preset="puer">보이차</button>
+        <div class="field">
+          <label for="brewTime">우림 시간</label>
+          <input id="brewTime" placeholder="타이머 종료/일시정지 시 자동 입력">
         </div>
+      </div>
 
-        <div class="adjust-controls">
-            <button id="minusBtn" type="button">-10초</button>
-            <button id="plusBtn" type="button">+10초</button>
-            <button id="instantPourBtn" class="instant-btn" type="button">즉시 출수</button>
-        </div>
+      <div class="field">
+        <label for="tastingNote">회차 한줄평 / 시음 노트</label>
+        <textarea id="tastingNote" placeholder="예: 향은 산뜻하고, 뒤맛은 살짝 달큰함. 떫음은 거의 없음."></textarea>
+      </div>
+    </div>
 
-        <div class="timer-controls">
-            <button id="startBtn" type="button">Start</button>
-            <button id="pauseBtn" type="button" class="secondary-btn">Pause</button>
-            <button id="resetBtn" type="button" class="secondary-btn">Reset</button>
-        </div>
+    <button id="shareBtn" class="share-btn" type="button">기록 공유</button>
 
-        <div id="alert"></div>
-    </section>
+    <p class="hint">
+      같은 차 이름을 유지하면 하나의 찻자리 카드 안에 회차가 차곡차곡 쌓입니다.
+      새로운 차를 시작하면 차 이름과 회차가 초기화돼요.
+    </p>
+  </section>
 
-    <section class="card form-card">
-        <h2 class="section-title">Tea Log</h2>
-
-        <div class="form-grid">
-            <div class="field">
-                <label for="nickname">닉네임</label>
-                <input id="nickname" placeholder="이름을 입력해주세요">
-            </div>
-
-            <div class="field">
-                <label for="teaName">차 이름</label>
-                <input id="teaName" placeholder="예: 2026년 백호은침, 대홍포, 보이차">
-            </div>
-
-            <div class="inline-fields">
-                <div class="field">
-                    <label for="waterTemp">물 온도</label>
-                    <select id="waterTemp">
-                        <option value="85°C">85°C</option>
-                        <option value="90°C">90°C</option>
-                        <option value="100°C">100°C</option>
-                        <option value="custom">직접 입력</option>
-                    </select>
-                    <input id="customTemp" class="custom-temp" placeholder="예: 92°C">
-                </div>
-
-                <div class="field">
-                    <label for="logInfusion">기록 회차</label>
-                    <input id="logInfusion" class="readonly-input" readonly>
-                </div>
-
-                <div class="field">
-                    <label for="brewTime">우림 시간</label>
-                    <input id="brewTime" placeholder="타이머 종료/일시정지 시 자동 입력">
-                </div>
-            </div>
-
-            <div class="field">
-                <label for="tastingNote">회차 한줄평 / 시음 노트</label>
-                <textarea id="tastingNote" placeholder="예: 향은 산뜻하고, 뒤맛은 살짝 달큰함. 떫음은 거의 없음."></textarea>
-            </div>
-        </div>
-
-        <button id="shareBtn" class="share-btn" type="button">기록 공유</button>
-
-        <p class="hint">
-            같은 차 이름을 유지하면 하나의 찻자리 카드 안에 회차가 차곡차곡 쌓입니다.
-            새로운 차를 시작하면 차 이름과 회차가 초기화돼요.
-        </p>
-    </section>
-
-    <section class="card logs-card">
-        <div class="logs-header">
-            <h2 class="logs-title">친구들과 쌓는 티 기록</h2>
-            <span class="infusion-badge">최근 50개</span>
-        </div>
-        <div id="notesList" class="log-list"></div>
-    </section>
+  <section class="card logs-card">
+    <div class="logs-header">
+      <h2 class="logs-title">친구들과 쌓는 티 기록</h2>
+      <span class="infusion-badge">최근 50개</span>
+    </div>
+    <div id="notesList" class="log-list"></div>
+  </section>
 
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    limit,
-    onSnapshot
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBs-rsGjDqPm_NwLe1OfQYYq8mFkUD-Pwg",
-    authDomain: "tea-timer-32076.firebaseapp.com",
-    projectId: "tea-timer-32076",
-    storageBucket: "tea-timer-32076.firebasestorage.app",
-    messagingSenderId: "743233533025",
-    appId: "1:743233533025:web:a2d9d7e7054acf51c6a620",
-    measurementId: "G-6P9GG8LYV5"
+  apiKey: "AIzaSyBs-rsGjDqPm_NwLe1OfQYYq8mFkUD-Pwg",
+  authDomain: "tea-timer-32076.firebaseapp.com",
+  projectId: "tea-timer-32076",
+  storageBucket: "tea-timer-32076.firebasestorage.app",
+  messagingSenderId: "743233533025",
+  appId: "1:743233533025:web:a2d9d7e7054acf51c6a620",
+  measurementId: "G-6P9GG8LYV5"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -582,41 +612,41 @@ const db = getFirestore(app);
 const notesRef = collection(db, "notes");
 
 const PRESETS = {
-    default: {
-        label: "기본",
-        defaultTime: 180,
-        step: 10
-    },
-    black: {
-        label: "홍차",
-        defaultTime: 180,
-        step: 10
-    },
-    youngWhite: {
-        label: "어린 백차",
-        defaultTime: 20,
-        step: 5
-    },
-    agedWhite: {
-        label: "노백차",
-        defaultTime: 30,
-        step: 10
-    },
-    taiwanOolong: {
-        label: "대만 우롱차",
-        defaultTime: 40,
-        step: 10
-    },
-    rockTea: {
-        label: "암차",
-        defaultTime: 10,
-        step: 1
-    },
-    puer: {
-        label: "보이차",
-        defaultTime: 20,
-        step: 5
-    }
+  default: {
+    label: "기본",
+    defaultTime: 180,
+    step: 10
+  },
+  black: {
+    label: "홍차",
+    defaultTime: 180,
+    step: 10
+  },
+  youngWhite: {
+    label: "어린 백차",
+    defaultTime: 20,
+    step: 5
+  },
+  agedWhite: {
+    label: "노백차",
+    defaultTime: 30,
+    step: 10
+  },
+  taiwanOolong: {
+    label: "대만 우롱차",
+    defaultTime: 40,
+    step: 10
+  },
+  rockTea: {
+    label: "암차",
+    defaultTime: 10,
+    step: 1
+  },
+  puer: {
+    label: "보이차",
+    defaultTime: 20,
+    step: 5
+  }
 };
 
 const timeDisplay = document.getElementById("timeDisplay");
@@ -662,535 +692,535 @@ let currentSessionId = localStorage.getItem("teaCurrentSessionId") || "";
 let lastTeaNameForSession = localStorage.getItem("teaLastTeaNameForSession") || "";
 
 function generateSessionId() {
-    if (window.crypto && typeof window.crypto.randomUUID === "function") {
-        return window.crypto.randomUUID();
-    }
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
 
-    return `tea-session-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  return "tea-session-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
 }
 
 function saveSessionState() {
-    localStorage.setItem("teaCurrentSessionId", currentSessionId);
-    localStorage.setItem("teaLastTeaNameForSession", lastTeaNameForSession);
-    updateSessionUI();
+  localStorage.setItem("teaCurrentSessionId", currentSessionId);
+  localStorage.setItem("teaLastTeaNameForSession", lastTeaNameForSession);
+  updateSessionUI();
 }
 
-function startNewTeaSession(reason = "new") {
-    currentSessionId = generateSessionId();
-    lastTeaNameForSession = teaNameInput.value.trim();
-    measuredInfusionForLog = null;
-    timerStartedForInfusion = false;
-    saveSessionState();
-    console.log("새 찻자리 세션 시작:", reason, currentSessionId);
+function startNewTeaSession(reason) {
+  currentSessionId = generateSessionId();
+  lastTeaNameForSession = teaNameInput.value.trim();
+  measuredInfusionForLog = null;
+  timerStartedForInfusion = false;
+  saveSessionState();
+  console.log("새 찻자리 세션 시작:", reason, currentSessionId);
 }
 
 function ensureSession() {
-    if (!currentSessionId) {
-        startNewTeaSession("first-visit");
-    } else {
-        updateSessionUI();
-    }
+  if (!currentSessionId) {
+    startNewTeaSession("first-visit");
+  } else {
+    updateSessionUI();
+  }
 }
 
 function updateSessionUI() {
-    const shortId = currentSessionId ? currentSessionId.slice(-6) : "준비 중";
-    sessionDisplay.innerText = `현재 찻자리 ID: ${shortId}`;
+  const shortId = currentSessionId ? currentSessionId.slice(-6) : "준비 중";
+  sessionDisplay.innerText = "현재 찻자리 ID: " + shortId;
 }
 
 function getCurrentPresetDefaultTime() {
-    return PRESETS[currentPresetKey].defaultTime;
+  return PRESETS[currentPresetKey].defaultTime;
 }
 
 function getLogInfusionNumber() {
-    return measuredInfusionForLog || currentInfusion;
+  return measuredInfusionForLog || currentInfusion;
 }
 
 function updateLogInfusionUI() {
-    logInfusionInput.value = `${getLogInfusionNumber()}회차`;
+  logInfusionInput.value = getLogInfusionNumber() + "회차";
 }
 
-function prepareNextInfusionTimer(delay = 650) {
-    setTimeout(() => {
-        totalTime = getCurrentPresetDefaultTime();
-        remainingTime = totalTime;
-        timerStartedForInfusion = false;
-        updateTimerUI();
-        updateLogInfusionUI();
-    }, delay);
+function prepareNextInfusionTimer(delay) {
+  const wait = typeof delay === "number" ? delay : 650;
+
+  setTimeout(() => {
+    totalTime = getCurrentPresetDefaultTime();
+    remainingTime = totalTime;
+    timerStartedForInfusion = false;
+    updateTimerUI();
+    updateLogInfusionUI();
+  }, wait);
 }
 
 function formatTimer(seconds) {
-    const safeSeconds = Math.max(0, seconds);
+  const safeSeconds = Math.max(0, seconds);
 
-    if (safeSeconds < 60) {
-        return `${safeSeconds}초`;
-    }
+  if (safeSeconds < 60) {
+    return safeSeconds + "초";
+  }
 
-    const minutes = Math.floor(safeSeconds / 60);
-    const secs = safeSeconds % 60;
+  const minutes = Math.floor(safeSeconds / 60);
+  const secs = safeSeconds % 60;
 
-    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  return String(minutes).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
 }
 
 function formatBrewTime(seconds) {
-    const safeSeconds = Math.max(0, seconds);
+  const safeSeconds = Math.max(0, seconds);
+  const minutes = Math.floor(safeSeconds / 60);
+  const secs = safeSeconds % 60;
 
-    if (safeSeconds === 0) {
-        return "0초";
-    }
+  if (safeSeconds === 0) {
+    return "0초";
+  }
 
-    const minutes = Math.floor(safeSeconds / 60);
-    const secs = safeSeconds % 60;
+  if (minutes > 0 && secs > 0) {
+    return minutes + "분 " + secs + "초 우림";
+  }
 
-    if (minutes > 0 && secs > 0) {
-        return `${minutes}분 ${secs}초 우림`;
-    }
+  if (minutes > 0) {
+    return minutes + "분 우림";
+  }
 
-    if (minutes > 0) {
-        return `${minutes}분 우림`;
-    }
-
-    return `${secs}초 우림`;
+  return secs + "초 우림";
 }
 
 function updateTimerUI() {
-    timeDisplay.innerText = formatTimer(remainingTime);
+  timeDisplay.innerText = formatTimer(remainingTime);
 
-    const percent = totalTime > 0 ? (remainingTime / totalTime) * 100 : 0;
-    progressBar.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+  const percent = totalTime > 0 ? (remainingTime / totalTime) * 100 : 0;
+  progressBar.style.width = Math.max(0, Math.min(100, percent)) + "%";
 
-    minusBtn.innerText = `-${adjustStep}초`;
-    plusBtn.innerText = `+${adjustStep}초`;
+  minusBtn.innerText = "-" + adjustStep + "초";
+  plusBtn.innerText = "+" + adjustStep + "초";
 
-    if (currentPresetKey === "rockTea") {
-        instantPourBtn.classList.add("show");
-    } else {
-        instantPourBtn.classList.remove("show");
-    }
+  if (currentPresetKey === "rockTea") {
+    instantPourBtn.classList.add("show");
+  } else {
+    instantPourBtn.classList.remove("show");
+  }
 }
 
 function updateInfusionUI() {
-    currentInfusion = Math.max(1, currentInfusion);
-    infusionDisplay.innerText = `현재 회차: ${currentInfusion}회`;
-    localStorage.setItem("teaCurrentInfusion", String(currentInfusion));
-    updateLogInfusionUI();
+  currentInfusion = Math.max(1, currentInfusion);
+  infusionDisplay.innerText = "현재 회차: " + currentInfusion + "회";
+  localStorage.setItem("teaCurrentInfusion", String(currentInfusion));
+  updateLogInfusionUI();
 }
 
 function advanceInfusion() {
-    measuredInfusionForLog = currentInfusion;
-    currentInfusion += 1;
-    updateInfusionUI();
-}
-
-function applyPreset(presetKey) {
-    const preset = PRESETS[presetKey];
-    if (!preset) return;
-
-    pauseInternal();
-
-    currentPresetKey = presetKey;
-    totalTime = preset.defaultTime;
-    remainingTime = totalTime;
-    adjustStep = preset.step;
-
-    timerStartedForInfusion = false;
-    measuredInfusionForLog = null;
-    alertBox.innerHTML = "";
-
-    document.querySelectorAll(".preset-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.preset === presetKey);
-    });
-
-    updateTimerUI();
-    updateLogInfusionUI();
-}
-
-function adjustTime(diff) {
-    pauseInternal();
-
-    remainingTime = Math.max(0, remainingTime + diff);
-    totalTime = remainingTime;
-
-    timerStartedForInfusion = false;
-    measuredInfusionForLog = null;
-    alertBox.innerHTML = "";
-
-    updateTimerUI();
-    updateLogInfusionUI();
-}
-
-function startTimer() {
-    if (timer) return;
-
-    if (remainingTime <= 0) {
-        totalTime = getCurrentPresetDefaultTime();
-        remainingTime = totalTime;
-        updateTimerUI();
-    }
-
-    alertBox.innerHTML = "";
-    measuredInfusionForLog = null;
-    timerStartedForInfusion = true;
-    updateLogInfusionUI();
-
-    timer = setInterval(() => {
-        if (remainingTime > 0) {
-            remainingTime -= 1;
-            updateTimerUI();
-            return;
-        }
-
-        finishTimer();
-    }, 1000);
+  measuredInfusionForLog = currentInfusion;
+  currentInfusion += 1;
+  updateInfusionUI();
 }
 
 function pauseInternal() {
-    if (timer) {
-        clearInterval(timer);
-        timer = null;
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+}
+
+function applyPreset(presetKey) {
+  const preset = PRESETS[presetKey];
+  if (!preset) return;
+
+  pauseInternal();
+
+  currentPresetKey = presetKey;
+  totalTime = preset.defaultTime;
+  remainingTime = totalTime;
+  adjustStep = preset.step;
+
+  timerStartedForInfusion = false;
+  measuredInfusionForLog = null;
+  alertBox.innerHTML = "";
+
+  document.querySelectorAll(".preset-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.preset === presetKey);
+  });
+
+  updateTimerUI();
+  updateLogInfusionUI();
+}
+
+function adjustTime(diff) {
+  pauseInternal();
+
+  remainingTime = Math.max(0, remainingTime + diff);
+  totalTime = remainingTime;
+
+  timerStartedForInfusion = false;
+  measuredInfusionForLog = null;
+  alertBox.innerHTML = "";
+
+  updateTimerUI();
+  updateLogInfusionUI();
+}
+
+function startTimer() {
+  if (timer) return;
+
+  if (remainingTime <= 0) {
+    totalTime = getCurrentPresetDefaultTime();
+    remainingTime = totalTime;
+    updateTimerUI();
+  }
+
+  alertBox.innerHTML = "";
+  measuredInfusionForLog = null;
+  timerStartedForInfusion = true;
+  updateLogInfusionUI();
+
+  timer = setInterval(() => {
+    remainingTime -= 1;
+
+    if (remainingTime <= 0) {
+      remainingTime = 0;
+      finishTimer();
+      return;
     }
+
+    updateTimerUI();
+  }, 1000);
 }
 
 function pauseTimer() {
-    pauseInternal();
+  pauseInternal();
 
-    if (timerStartedForInfusion && remainingTime < totalTime) {
-        const elapsed = totalTime - remainingTime;
-        brewTimeInput.value = formatBrewTime(elapsed);
-        measuredInfusionForLog = currentInfusion;
-        updateLogInfusionUI();
-    }
+  if (timerStartedForInfusion && remainingTime < totalTime) {
+    const elapsed = totalTime - remainingTime;
+    brewTimeInput.value = formatBrewTime(elapsed);
+    measuredInfusionForLog = currentInfusion;
+    updateLogInfusionUI();
+  }
 }
 
 function resetTimer() {
-    pauseInternal();
+  pauseInternal();
 
-    if (timerStartedForInfusion) {
-        const elapsed = totalTime - remainingTime;
+  if (timerStartedForInfusion) {
+    const elapsed = totalTime - remainingTime;
 
-        if (elapsed > 0) {
-            brewTimeInput.value = formatBrewTime(elapsed);
-            advanceInfusion();
-        }
+    if (elapsed > 0) {
+      brewTimeInput.value = formatBrewTime(elapsed);
+      advanceInfusion();
     }
+  }
 
-    totalTime = getCurrentPresetDefaultTime();
-    remainingTime = totalTime;
-    timerStartedForInfusion = false;
+  totalTime = getCurrentPresetDefaultTime();
+  remainingTime = totalTime;
+  timerStartedForInfusion = false;
 
-    updateTimerUI();
-    updateLogInfusionUI();
+  updateTimerUI();
+  updateLogInfusionUI();
 }
 
 function finishTimer() {
-    pauseInternal();
+  pauseInternal();
 
-    const finishedBrewTime = totalTime;
+  const finishedBrewTime = totalTime;
 
-    remainingTime = 0;
-    updateTimerUI();
+  remainingTime = 0;
+  updateTimerUI();
 
-    brewTimeInput.value = formatBrewTime(finishedBrewTime);
-    advanceInfusion();
-    playDoneEffect();
+  brewTimeInput.value = formatBrewTime(finishedBrewTime);
+  advanceInfusion();
+  playDoneEffect();
 
-    timerStartedForInfusion = false;
-    prepareNextInfusionTimer();
+  timerStartedForInfusion = false;
+  prepareNextInfusionTimer(650);
 }
 
 function instantPour() {
-    if (currentPresetKey !== "rockTea") return;
+  if (currentPresetKey !== "rockTea") return;
 
-    pauseInternal();
+  pauseInternal();
 
-    remainingTime = 0;
-    brewTimeInput.value = "즉시 출수";
+  remainingTime = 0;
+  brewTimeInput.value = "즉시 출수";
 
-    advanceInfusion();
-    updateTimerUI();
-    playDoneEffect();
+  advanceInfusion();
+  updateTimerUI();
+  playDoneEffect();
 
-    timerStartedForInfusion = false;
-    prepareNextInfusionTimer();
+  timerStartedForInfusion = false;
+  prepareNextInfusionTimer(650);
 }
 
 function playDoneEffect() {
-    alertBox.innerHTML = `<div class="alert">차가 다 우러났어요 🍵</div>`;
+  alertBox.innerHTML = '<div class="alert">차가 다 우러났어요 🍵</div>';
 
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
 
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(660, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.18);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(660, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.18);
 
-        gain.gain.setValueAtTime(0.001, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.03);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+    gain.gain.setValueAtTime(0.001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
 
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
 
-        osc.start();
-        osc.stop(ctx.currentTime + 0.48);
-    } catch (error) {
-        console.log("Audio notification unavailable:", error);
-    }
+    osc.start();
+    osc.stop(ctx.currentTime + 0.48);
+  } catch (error) {
+    console.log("Audio notification unavailable:", error);
+  }
 }
 
 function getWaterTemp() {
-    if (waterTempSelect.value === "custom") {
-        return customTempInput.value.trim() || "직접 입력";
-    }
+  if (waterTempSelect.value === "custom") {
+    return customTempInput.value.trim() || "직접 입력";
+  }
 
-    return waterTempSelect.value;
+  return waterTempSelect.value;
 }
 
 function savePersistentForm() {
-    localStorage.setItem("teaNick", nicknameInput.value);
-    localStorage.setItem("teaName", teaNameInput.value);
-    localStorage.setItem("teaWaterTemp", waterTempSelect.value);
-    localStorage.setItem("teaCustomTemp", customTempInput.value);
+  localStorage.setItem("teaNick", nicknameInput.value);
+  localStorage.setItem("teaName", teaNameInput.value);
+  localStorage.setItem("teaWaterTemp", waterTempSelect.value);
+  localStorage.setItem("teaCustomTemp", customTempInput.value);
 }
 
 function restorePersistentForm() {
-    nicknameInput.value = localStorage.getItem("teaNick") || "";
-    teaNameInput.value = localStorage.getItem("teaName") || "";
+  nicknameInput.value = localStorage.getItem("teaNick") || "";
+  teaNameInput.value = localStorage.getItem("teaName") || "";
 
-    const savedTemp = localStorage.getItem("teaWaterTemp");
-    if (savedTemp) {
-        waterTempSelect.value = savedTemp;
-    }
+  const savedTemp = localStorage.getItem("teaWaterTemp");
+  if (savedTemp) {
+    waterTempSelect.value = savedTemp;
+  }
 
-    customTempInput.value = localStorage.getItem("teaCustomTemp") || "";
-    toggleCustomTemp();
+  customTempInput.value = localStorage.getItem("teaCustomTemp") || "";
+  toggleCustomTemp();
 }
 
 function toggleCustomTemp() {
-    if (waterTempSelect.value === "custom") {
-        customTempInput.classList.add("show");
-    } else {
-        customTempInput.classList.remove("show");
-    }
+  if (waterTempSelect.value === "custom") {
+    customTempInput.classList.add("show");
+  } else {
+    customTempInput.classList.remove("show");
+  }
 }
 
 function escapeHTML(value) {
-    return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function handleTeaNameChanged() {
-    const newTeaName = teaNameInput.value.trim();
+  const newTeaName = teaNameInput.value.trim();
 
-    savePersistentForm();
+  savePersistentForm();
 
-    if (newTeaName !== lastTeaNameForSession) {
-        startNewTeaSession("tea-name-changed");
-        lastTeaNameForSession = newTeaName;
-        saveSessionState();
-
-        currentInfusion = 1;
-        measuredInfusionForLog = null;
-        updateInfusionUI();
-    }
-}
-
-async function addNote() {
-    const name = nicknameInput.value.trim() || "익명";
-    const teaName = teaNameInput.value.trim() || "이름 없는 차";
-    const waterTemp = getWaterTemp();
-    const brewTime = brewTimeInput.value.trim() || "미기록";
-    const tastingNote = tastingNoteInput.value.trim();
-
-    if (!tastingNote) {
-        alert("시음 노트를 한 줄이라도 남겨주세요 🍃");
-        return;
-    }
-
-    if (!currentSessionId) {
-        startNewTeaSession("before-save");
-    }
-
-    if (teaName !== lastTeaNameForSession) {
-        currentSessionId = generateSessionId();
-        lastTeaNameForSession = teaName;
-        saveSessionState();
-    }
-
-    const infusionForLog = getLogInfusionNumber();
-
-    await addDoc(notesRef, {
-        sessionId: currentSessionId,
-        name,
-        teaName,
-        waterTemp,
-        brewTime,
-        infusion: infusionForLog,
-        tastingNote,
-        preset: PRESETS[currentPresetKey].label,
-        timestamp: Date.now()
-    });
-
-    savePersistentForm();
-
-    brewTimeInput.value = "";
-    tastingNoteInput.value = "";
-    measuredInfusionForLog = null;
-    updateLogInfusionUI();
-}
-
-function groupNotesBySession(items) {
-    const groupMap = new Map();
-
-    items.forEach(item => {
-        const sessionKey = item.sessionId || `legacy-${item.id}`;
-
-        if (!groupMap.has(sessionKey)) {
-            groupMap.set(sessionKey, {
-                sessionId: sessionKey,
-                name: item.name || "익명",
-                teaName: item.teaName || "이름 없는 차",
-                preset: item.preset || "차",
-                latestTimestamp: item.timestamp || 0,
-                entries: []
-            });
-        }
-
-        const group = groupMap.get(sessionKey);
-
-        if ((item.timestamp || 0) >= group.latestTimestamp) {
-            group.latestTimestamp = item.timestamp || 0;
-            group.name = item.name || group.name;
-            group.teaName = item.teaName || group.teaName;
-            group.preset = item.preset || group.preset;
-        }
-
-        group.entries.push(item);
-    });
-
-    const groups = Array.from(groupMap.values()).map(group => {
-        group.entries.sort((a, b) => {
-            const infusionA = Number(a.infusion || 0);
-            const infusionB = Number(b.infusion || 0);
-
-            if (infusionA !== infusionB) {
-                return infusionA - infusionB;
-            }
-
-            return Number(a.timestamp || 0) - Number(b.timestamp || 0);
-        });
-
-        return group;
-    });
-
-    groups.sort((a, b) => b.latestTimestamp - a.latestTimestamp);
-
-    return groups;
-}
-
-function renderNotes(snapshot) {
-    notesList.innerHTML = "";
-
-    if (snapshot.empty) {
-        notesList.innerHTML = `<div class="empty">아직 기록이 없어요. 첫 티 로그를 남겨보세요 🍵</div>`;
-        return;
-    }
-
-    const flatItems = [];
-
-    snapshot.forEach(doc => {
-        flatItems.push({
-            id: doc.id,
-            ...doc.data()
-        });
-    });
-
-    const sessionGroups = groupNotesBySession(flatItems);
-
-    sessionGroups.forEach(group => {
-        const latestTime = group.latestTimestamp
-            ? new Date(group.latestTimestamp).toLocaleString("ko-KR", {
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit"
-            })
-            : "시간 없음";
-
-        const shortSessionId = String(group.sessionId).slice(-6);
-
-        const entryLines = group.entries.map(entry => {
-            return `
-                <div class="infusion-line">
-                    <span class="infusion-dot">•</span>
-                    <div class="infusion-text">
-                        <strong>${escapeHTML(entry.infusion)}회차:</strong>
-                        ${escapeHTML(entry.brewTime)} / ${escapeHTML(entry.waterTemp)} / ${escapeHTML(entry.tastingNote)}
-                    </div>
-                </div>
-            `;
-        }).join("");
-
-        const div = document.createElement("div");
-        div.className = "session-card";
-
-        div.innerHTML = `
-            <div class="session-header">
-                <div class="session-title-wrap">
-                    <div class="session-name">${escapeHTML(group.name)}</div>
-                    <div class="session-tea">🍃 ${escapeHTML(group.teaName)} / ${escapeHTML(group.preset)}</div>
-                </div>
-                <div class="session-time">${escapeHTML(latestTime)}</div>
-            </div>
-
-            <div class="infusion-list">
-                ${entryLines}
-            </div>
-
-            <div class="session-footer">
-                <span class="meta-chip">찻자리 기록 ${group.entries.length}개</span>
-                <span class="session-id-chip">session ${escapeHTML(shortSessionId)}</span>
-            </div>
-        `;
-
-        notesList.appendChild(div);
-    });
-}
-
-function startFreshTea() {
-    pauseInternal();
+  if (newTeaName !== lastTeaNameForSession) {
+    startNewTeaSession("tea-name-changed");
+    lastTeaNameForSession = newTeaName;
+    saveSessionState();
 
     currentInfusion = 1;
     measuredInfusionForLog = null;
-    timerStartedForInfusion = false;
-
-    teaNameInput.value = "";
-    brewTimeInput.value = "";
-    tastingNoteInput.value = "";
-
-    localStorage.setItem("teaName", "");
-    lastTeaNameForSession = "";
-
-    totalTime = getCurrentPresetDefaultTime();
-    remainingTime = totalTime;
-
     updateInfusionUI();
-    updateTimerUI();
-
-    startNewTeaSession("new-tea-start");
+  }
 }
 
-presetList.addEventListener("click", event => {
-    const button = event.target.closest(".preset-btn");
-    if (!button) return;
+async function addNote() {
+  const name = nicknameInput.value.trim() || "익명";
+  const teaName = teaNameInput.value.trim() || "이름 없는 차";
+  const waterTemp = getWaterTemp();
+  const brewTime = brewTimeInput.value.trim() || "미기록";
+  const tastingNote = tastingNoteInput.value.trim();
 
-    applyPreset(button.dataset.preset);
+  if (!tastingNote) {
+    alert("시음 노트를 한 줄이라도 남겨주세요 🍃");
+    return;
+  }
+
+  if (!currentSessionId) {
+    startNewTeaSession("before-save");
+  }
+
+  if (teaName !== lastTeaNameForSession) {
+    currentSessionId = generateSessionId();
+    lastTeaNameForSession = teaName;
+    saveSessionState();
+  }
+
+  const infusionForLog = getLogInfusionNumber();
+
+  await addDoc(notesRef, {
+    sessionId: currentSessionId,
+    name: name,
+    teaName: teaName,
+    waterTemp: waterTemp,
+    brewTime: brewTime,
+    infusion: infusionForLog,
+    tastingNote: tastingNote,
+    preset: PRESETS[currentPresetKey].label,
+    timestamp: Date.now()
+  });
+
+  savePersistentForm();
+
+  brewTimeInput.value = "";
+  tastingNoteInput.value = "";
+  measuredInfusionForLog = null;
+  updateLogInfusionUI();
+}
+
+function groupNotesBySession(items) {
+  const groupMap = new Map();
+
+  items.forEach((item) => {
+    const sessionKey = item.sessionId || "legacy-" + item.id;
+
+    if (!groupMap.has(sessionKey)) {
+      groupMap.set(sessionKey, {
+        sessionId: sessionKey,
+        name: item.name || "익명",
+        teaName: item.teaName || "이름 없는 차",
+        preset: item.preset || "차",
+        latestTimestamp: item.timestamp || 0,
+        entries: []
+      });
+    }
+
+    const group = groupMap.get(sessionKey);
+
+    if ((item.timestamp || 0) >= group.latestTimestamp) {
+      group.latestTimestamp = item.timestamp || 0;
+      group.name = item.name || group.name;
+      group.teaName = item.teaName || group.teaName;
+      group.preset = item.preset || group.preset;
+    }
+
+    group.entries.push(item);
+  });
+
+  const groups = Array.from(groupMap.values());
+
+  groups.forEach((group) => {
+    group.entries.sort((a, b) => {
+      const infusionA = Number(a.infusion || 0);
+      const infusionB = Number(b.infusion || 0);
+
+      if (infusionA !== infusionB) {
+        return infusionA - infusionB;
+      }
+
+      return Number(a.timestamp || 0) - Number(b.timestamp || 0);
+    });
+  });
+
+  groups.sort((a, b) => b.latestTimestamp - a.latestTimestamp);
+
+  return groups;
+}
+
+function renderNotes(snapshot) {
+  notesList.innerHTML = "";
+
+  if (snapshot.empty) {
+    notesList.innerHTML = '<div class="empty">아직 기록이 없어요. 첫 티 로그를 남겨보세요 🍵</div>';
+    return;
+  }
+
+  const flatItems = [];
+
+  snapshot.forEach((doc) => {
+    flatItems.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+
+  const sessionGroups = groupNotesBySession(flatItems);
+
+  sessionGroups.forEach((group) => {
+    const latestTime = group.latestTimestamp
+      ? new Date(group.latestTimestamp).toLocaleString("ko-KR", {
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      : "시간 없음";
+
+    const shortSessionId = String(group.sessionId).slice(-6);
+
+    const entryLines = group.entries.map((entry) => {
+      return (
+        '<div class="infusion-line">' +
+          '<span class="infusion-dot">•</span>' +
+          '<div class="infusion-text">' +
+            '<strong>' + escapeHTML(entry.infusion) + '회차:</strong> ' +
+            escapeHTML(entry.brewTime) + ' / ' +
+            escapeHTML(entry.waterTemp) + ' / ' +
+            escapeHTML(entry.tastingNote) +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
+
+    const div = document.createElement("div");
+    div.className = "session-card";
+
+    div.innerHTML =
+      '<div class="session-header">' +
+        '<div class="session-title-wrap">' +
+          '<div class="session-name">' + escapeHTML(group.name) + '</div>' +
+          '<div class="session-tea">🍃 ' + escapeHTML(group.teaName) + ' / ' + escapeHTML(group.preset) + '</div>' +
+        '</div>' +
+        '<div class="session-time">' + escapeHTML(latestTime) + '</div>' +
+      '</div>' +
+      '<div class="infusion-list">' + entryLines + '</div>' +
+      '<div class="session-footer">' +
+        '<span class="meta-chip">찻자리 기록 ' + group.entries.length + '개</span>' +
+        '<span class="session-id-chip">session ' + escapeHTML(shortSessionId) + '</span>' +
+      '</div>';
+
+    notesList.appendChild(div);
+  });
+}
+
+function startFreshTea() {
+  pauseInternal();
+
+  currentInfusion = 1;
+  measuredInfusionForLog = null;
+  timerStartedForInfusion = false;
+
+  teaNameInput.value = "";
+  brewTimeInput.value = "";
+  tastingNoteInput.value = "";
+
+  localStorage.setItem("teaName", "");
+  lastTeaNameForSession = "";
+
+  totalTime = getCurrentPresetDefaultTime();
+  remainingTime = totalTime;
+
+  updateInfusionUI();
+  updateTimerUI();
+
+  startNewTeaSession("new-tea-start");
+}
+
+presetList.addEventListener("click", (event) => {
+  const button = event.target.closest(".preset-btn");
+  if (!button) return;
+
+  applyPreset(button.dataset.preset);
 });
 
 minusBtn.addEventListener("click", () => adjustTime(-adjustStep));
@@ -1202,15 +1232,15 @@ pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
 
 decreaseInfusionBtn.addEventListener("click", () => {
-    currentInfusion = Math.max(1, currentInfusion - 1);
-    measuredInfusionForLog = null;
-    updateInfusionUI();
+  currentInfusion = Math.max(1, currentInfusion - 1);
+  measuredInfusionForLog = null;
+  updateInfusionUI();
 });
 
 increaseInfusionBtn.addEventListener("click", () => {
-    currentInfusion += 1;
-    measuredInfusionForLog = null;
-    updateInfusionUI();
+  currentInfusion += 1;
+  measuredInfusionForLog = null;
+  updateInfusionUI();
 });
 
 resetInfusionBtn.addEventListener("click", startFreshTea);
@@ -1223,24 +1253,24 @@ teaNameInput.addEventListener("change", handleTeaNameChanged);
 customTempInput.addEventListener("input", savePersistentForm);
 
 waterTempSelect.addEventListener("change", () => {
-    toggleCustomTemp();
-    savePersistentForm();
+  toggleCustomTemp();
+  savePersistentForm();
 });
 
 shareBtn.addEventListener("click", addNote);
 
 const q = query(notesRef, orderBy("timestamp", "desc"), limit(50));
 
-onSnapshot(q, snapshot => {
-    renderNotes(snapshot);
+onSnapshot(q, (snapshot) => {
+  renderNotes(snapshot);
 });
 
 restorePersistentForm();
 ensureSession();
 
 if (!lastTeaNameForSession && teaNameInput.value.trim()) {
-    lastTeaNameForSession = teaNameInput.value.trim();
-    saveSessionState();
+  lastTeaNameForSession = teaNameInput.value.trim();
+  saveSessionState();
 }
 
 updateInfusionUI();
@@ -1249,27 +1279,3 @@ updateLogInfusionUI();
 </script>
 </body>
 </html>
-<title>Tea Timer 🍵</title>
-
-<style>
-:root {
-    --bg: #f7f3ef;
-    --card: #ffffff;
-    --green: #cde2c7;
-    --green-deep: #5f7f63;
-    --green-soft: #eef7eb;
-    --green-soft-2: #f6fbf4;
-    --text: #3f4a3f;
-    --muted: #7b8278;
-    --line: #e7ebe3;
-    --shadow: 0 10px 28px rgba(85, 105, 82, 0.12);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background:

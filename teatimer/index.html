@@ -1,18 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tea Timer 🍵</title>
-
-<style>
-:root{
-    --bg:#f7f3ef;
-    --card:#ffffff;
-    --green:#cde2c7;
-    --green-deep:#5f7f63;
-    --green-soft:#eef7eb;
-    --green-soft-2:#f6fbf4;
+<meta charset-2:#f6fbf4;<meta charset="UTF-8" />
     --text:#3f4a3f;
     --muted:#7b8278;
     --line:#e7ebe3;
@@ -271,7 +260,7 @@ select:focus{
 
 .inline-fields{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr 1fr;
     gap:10px;
 }
 
@@ -282,6 +271,12 @@ select:focus{
 
 .custom-temp.show{
     display:block;
+}
+
+.readonly-input{
+    background:#f3f7f0;
+    color:#5f7f63;
+    font-weight:700;
 }
 
 .share-btn{
@@ -429,6 +424,12 @@ select:focus{
     font-size:11px;
 }
 
+@media (max-width:520px){
+    .inline-fields{
+        grid-template-columns:1fr;
+    }
+}
+
 @media (max-width:420px){
     .container{
         padding:14px;
@@ -441,10 +442,6 @@ select:focus{
 
     .timer{
         font-size:50px;
-    }
-
-    .inline-fields{
-        grid-template-columns:1fr;
     }
 
     button{
@@ -518,7 +515,7 @@ select:focus{
         <div class="form-grid">
             <div class="field">
                 <label for="nickname">닉네임</label>
-                <input id="nickname" placeholder="이름 또는 커뮤니티 닉네임을 입력해주세요">
+                <input id="nickname" placeholder="이름을 입력해주세요">
             </div>
 
             <div class="field">
@@ -536,6 +533,11 @@ select:focus{
                         <option value="custom">직접 입력</option>
                     </select>
                     <input id="customTemp" class="custom-temp" placeholder="예: 92°C">
+                </div>
+
+                <div class="field">
+                    <label for="logInfusion">기록 회차</label>
+                    <input id="logInfusion" class="readonly-input" readonly>
                 </div>
 
                 <div class="field">
@@ -653,6 +655,7 @@ const nicknameInput = document.getElementById("nickname");
 const teaNameInput = document.getElementById("teaName");
 const waterTempSelect = document.getElementById("waterTemp");
 const customTempInput = document.getElementById("customTemp");
+const logInfusionInput = document.getElementById("logInfusion");
 const brewTimeInput = document.getElementById("brewTime");
 const tastingNoteInput = document.getElementById("tastingNote");
 const shareBtn = document.getElementById("shareBtn");
@@ -665,9 +668,8 @@ let adjustStep = PRESETS.default.step;
 let timer = null;
 
 let currentInfusion = Number(localStorage.getItem("teaCurrentInfusion") || "1");
-let timerStartedForInfusion = false;
-let infusionAlreadyAdvanced = false;
 let measuredInfusionForLog = null;
+let timerStartedForInfusion = false;
 
 let currentSessionId = localStorage.getItem("teaCurrentSessionId") || "";
 let lastTeaNameForSession = localStorage.getItem("teaLastTeaNameForSession") || "";
@@ -689,13 +691,9 @@ function saveSessionState(){
 function startNewTeaSession(reason = "new"){
     currentSessionId = generateSessionId();
     lastTeaNameForSession = teaNameInput.value.trim();
-
     measuredInfusionForLog = null;
-    infusionAlreadyAdvanced = false;
     timerStartedForInfusion = false;
-
     saveSessionState();
-
     console.log("새 찻자리 세션 시작:", reason, currentSessionId);
 }
 
@@ -716,13 +714,21 @@ function getCurrentPresetDefaultTime(){
     return PRESETS[currentPresetKey].defaultTime;
 }
 
+function getLogInfusionNumber(){
+    return measuredInfusionForLog || currentInfusion;
+}
+
+function updateLogInfusionUI(){
+    logInfusionInput.value = `${getLogInfusionNumber()}회차`;
+}
+
 function prepareNextInfusionTimer(delay = 650){
     setTimeout(() => {
         totalTime = getCurrentPresetDefaultTime();
         remainingTime = totalTime;
-        infusionAlreadyAdvanced = false;
         timerStartedForInfusion = false;
         updateTimerUI();
+        updateLogInfusionUI();
     }, delay);
 }
 
@@ -780,15 +786,12 @@ function updateInfusionUI(){
     currentInfusion = Math.max(1, currentInfusion);
     infusionDisplay.innerText = `현재 회차: ${currentInfusion}회`;
     localStorage.setItem("teaCurrentInfusion", String(currentInfusion));
+    updateLogInfusionUI();
 }
 
-function advanceInfusionOnce(){
-    if(infusionAlreadyAdvanced) return;
-
+function advanceInfusion(){
     measuredInfusionForLog = currentInfusion;
     currentInfusion += 1;
-    infusionAlreadyAdvanced = true;
-
     updateInfusionUI();
 }
 
@@ -804,7 +807,6 @@ function applyPreset(presetKey){
     adjustStep = preset.step;
 
     timerStartedForInfusion = false;
-    infusionAlreadyAdvanced = false;
     measuredInfusionForLog = null;
     alertBox.innerHTML = "";
 
@@ -813,6 +815,7 @@ function applyPreset(presetKey){
     });
 
     updateTimerUI();
+    updateLogInfusionUI();
 }
 
 function adjustTime(diff){
@@ -822,11 +825,11 @@ function adjustTime(diff){
     totalTime = remainingTime;
 
     timerStartedForInfusion = false;
-    infusionAlreadyAdvanced = false;
     measuredInfusionForLog = null;
     alertBox.innerHTML = "";
 
     updateTimerUI();
+    updateLogInfusionUI();
 }
 
 function startTimer(){
@@ -839,8 +842,9 @@ function startTimer(){
     }
 
     alertBox.innerHTML = "";
+    measuredInfusionForLog = null;
     timerStartedForInfusion = true;
-    infusionAlreadyAdvanced = false;
+    updateLogInfusionUI();
 
     timer = setInterval(() => {
         if(remainingTime > 0){
@@ -867,29 +871,28 @@ function pauseTimer(){
         const elapsed = totalTime - remainingTime;
         brewTimeInput.value = formatBrewTime(elapsed);
         measuredInfusionForLog = currentInfusion;
+        updateLogInfusionUI();
     }
 }
 
 function resetTimer(){
     pauseInternal();
 
-    if(timerStartedForInfusion && !infusionAlreadyAdvanced){
+    if(timerStartedForInfusion){
         const elapsed = totalTime - remainingTime;
 
         if(elapsed > 0){
             brewTimeInput.value = formatBrewTime(elapsed);
+            advanceInfusion();
         }
-
-        advanceInfusionOnce();
     }
 
     totalTime = getCurrentPresetDefaultTime();
     remainingTime = totalTime;
-
     timerStartedForInfusion = false;
-    infusionAlreadyAdvanced = false;
 
     updateTimerUI();
+    updateLogInfusionUI();
 }
 
 function finishTimer(){
@@ -901,12 +904,10 @@ function finishTimer(){
     updateTimerUI();
 
     brewTimeInput.value = formatBrewTime(finishedBrewTime);
-
-    advanceInfusionOnce();
+    advanceInfusion();
     playDoneEffect();
 
     timerStartedForInfusion = false;
-
     prepareNextInfusionTimer();
 }
 
@@ -917,14 +918,12 @@ function instantPour(){
 
     remainingTime = 0;
     brewTimeInput.value = "즉시 출수";
-    measuredInfusionForLog = currentInfusion;
 
+    advanceInfusion();
     updateTimerUI();
-    advanceInfusionOnce();
     playDoneEffect();
 
     timerStartedForInfusion = false;
-
     prepareNextInfusionTimer();
 }
 
@@ -1010,6 +1009,7 @@ function handleTeaNameChanged(){
         saveSessionState();
 
         currentInfusion = 1;
+        measuredInfusionForLog = null;
         updateInfusionUI();
     }
 }
@@ -1034,11 +1034,13 @@ async function addNote(){
         startNewTeaSession("before-save-tea-name-diff");
         lastTeaNameForSession = teaName;
         saveSessionState();
+
         currentInfusion = 1;
+        measuredInfusionForLog = null;
         updateInfusionUI();
     }
 
-    const infusionForLog = measuredInfusionForLog || currentInfusion;
+    const infusionForLog = getLogInfusionNumber();
 
     await addDoc(notesRef, {
         sessionId: currentSessionId,
@@ -1057,6 +1059,7 @@ async function addNote(){
     brewTimeInput.value = "";
     tastingNoteInput.value = "";
     measuredInfusionForLog = null;
+    updateLogInfusionUI();
 }
 
 function groupNotesBySession(items){
@@ -1182,7 +1185,6 @@ function startFreshTea(){
 
     currentInfusion = 1;
     measuredInfusionForLog = null;
-    infusionAlreadyAdvanced = false;
     timerStartedForInfusion = false;
 
     teaNameInput.value = "";
@@ -1218,11 +1220,13 @@ resetBtn.addEventListener("click", resetTimer);
 
 decreaseInfusionBtn.addEventListener("click", () => {
     currentInfusion = Math.max(1, currentInfusion - 1);
+    measuredInfusionForLog = null;
     updateInfusionUI();
 });
 
 increaseInfusionBtn.addEventListener("click", () => {
     currentInfusion += 1;
+    measuredInfusionForLog = null;
     updateInfusionUI();
 });
 
@@ -1258,7 +1262,18 @@ if(!lastTeaNameForSession && teaNameInput.value.trim()){
 
 updateInfusionUI();
 updateTimerUI();
+updateLogInfusionUI();
 </script>
 
 </body>
 </html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tea Timer 🍵</title>
+
+<style>
+:root{
+    --bg:#f7f3ef;
+    --card:#ffffff;
+    --green:#cde2c7;
+    --green-deep:#5f7f63;
+    --green-soft:#eef7eb;

@@ -1,273 +1,1092 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tea Timer 🍵</title>
 
 <style>
+:root{
+    --bg:#f7f3ef;
+    --card:#ffffff;
+    --green:#cde2c7;
+    --green-deep:#5f7f63;
+    --green-soft:#eef7eb;
+    --text:#3f4a3f;
+    --muted:#7b8278;
+    --line:#e7ebe3;
+    --shadow:0 10px 28px rgba(85, 105, 82, 0.12);
+}
+
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
-    font-family:sans-serif;
-    background:#f7f3ef;
-    color:#4b4b4b;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(205,226,199,0.45), transparent 28%),
+        linear-gradient(180deg, #f7f3ef 0%, #f9f6f1 100%);
+    color:var(--text);
 }
+
 .container{
-    max-width:500px;
+    max-width:560px;
     margin:auto;
     padding:20px;
 }
+
 .card{
-    background:white;
-    border-radius:20px;
+    background:rgba(255,255,255,0.92);
+    border:1px solid rgba(205,226,199,0.45);
+    border-radius:24px;
     padding:20px;
-    margin-bottom:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    margin-bottom:18px;
+    box-shadow:var(--shadow);
     text-align:center;
-}
-.timer{
-    font-size:48px;
-    margin:20px;
+    backdrop-filter: blur(6px);
 }
 
-/* ✅ 진행 바 복구 */
-.progress{
-    height:8px;
-    background:#eee;
-    border-radius:10px;
-    overflow:hidden;
-    margin:10px 0 20px;
+.header-title{
+    margin:2px 0 8px;
+    font-size:27px;
+    letter-spacing:-0.4px;
 }
+
+.guide{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.55;
+}
+
+.infusion-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:16px;
+    flex-wrap:wrap;
+}
+
+.infusion-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 13px;
+    border-radius:999px;
+    background:var(--green-soft);
+    color:var(--green-deep);
+    font-size:14px;
+    font-weight:700;
+}
+
+.mini-btn{
+    padding:7px 10px;
+    font-size:12px;
+    border-radius:999px;
+}
+
+.timer{
+    font-size:58px;
+    font-weight:800;
+    letter-spacing:-1px;
+    margin:18px 0 12px;
+    color:#334236;
+}
+
+.progress{
+    height:10px;
+    background:#edf0ea;
+    border-radius:999px;
+    overflow:hidden;
+    margin:8px 0 18px;
+}
+
 .progress-bar{
     height:100%;
     width:100%;
-    background:#cde2c7;
-    transition:width 0.3s;
+    background:linear-gradient(90deg, #b9d9b5, #d8ecd2);
+    border-radius:999px;
+    transition:width 0.25s ease;
+}
+
+.preset-scroll{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:2px 2px 10px;
+    margin:0 -2px 10px;
+    scrollbar-width:none;
+}
+
+.preset-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+.preset-btn{
+    flex:0 0 auto;
+    padding:9px 12px;
+    border-radius:999px;
+    background:#f8fbf6;
+    border:1px solid var(--line);
+    color:#58705a;
+    font-size:13px;
+    font-weight:700;
+}
+
+.preset-btn.active{
+    background:var(--green);
+    border-color:#bad6b6;
+    color:#34573a;
+    box-shadow:0 5px 14px rgba(104, 133, 101, 0.18);
+}
+
+.timer-controls,
+.adjust-controls{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:8px;
 }
 
 button{
-    padding:10px 14px;
+    padding:11px 15px;
     border:none;
-    border-radius:20px;
-    margin:5px;
-    background:#cde2c7;
-    color:#3d5a40;
+    border-radius:999px;
+    background:var(--green);
+    color:#38573c;
     cursor:pointer;
-    transition:0.2s;
-    font-weight:500;
-}
-button:hover{
-    transform:scale(1.05);
-    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+    transition:transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    font-weight:700;
 }
 
-/* ✅ 닉네임 카드 개선 */
-.input-card{
+button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 6px 14px rgba(84, 105, 80, 0.16);
+}
+
+button:active{
+    transform:scale(0.97);
+}
+
+.secondary-btn{
+    background:#f1f6ef;
+    color:#5f7f63;
+}
+
+.instant-btn{
+    display:none;
+    background:#e7f3df;
+    color:#466c45;
+    border:1px solid #c9e1c2;
+}
+
+.instant-btn.show{
+    display:inline-flex;
+}
+
+.alert{
+    display:inline-block;
+    margin-top:14px;
+    padding:9px 13px;
+    border-radius:999px;
+    background:#f0f8ed;
+    color:#5f7f63;
+    font-weight:800;
+    animation:softPop 0.45s ease;
+}
+
+@keyframes softPop{
+    0%{ transform:scale(0.88); opacity:0; }
+    100%{ transform:scale(1); opacity:1; }
+}
+
+.form-card{
     text-align:left;
 }
-.label{
-    font-size:14px;
-    color:#777;
+
+.section-title{
+    margin:0 0 12px;
+    font-size:18px;
+    color:#405344;
+}
+
+.form-grid{
+    display:grid;
+    gap:12px;
+}
+
+.field label{
+    display:block;
     margin-bottom:6px;
+    color:#6f786c;
+    font-size:13px;
+    font-weight:700;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px 13px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#fbfaf7;
+    color:var(--text);
+    font-size:14px;
+    transition:border 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+textarea{
+    min-height:94px;
+    resize:vertical;
+    line-height:1.5;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    outline:none;
+    border-color:#b8d8b2;
+    box-shadow:0 0 0 3px rgba(205,226,199,0.45);
+    background:#ffffff;
+}
+
+.inline-fields{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.custom-temp{
+    display:none;
+    margin-top:8px;
+}
+
+.custom-temp.show{
     display:block;
 }
-input, textarea{
+
+.share-btn{
     width:100%;
-    padding:12px;
-    margin-top:5px;
-    border-radius:12px;
-    border:1px solid #e5e5e5;
-    background:#faf9f7;
+    margin-top:14px;
+    padding:13px 16px;
 }
-input:focus, textarea:focus{
-    outline:none;
-    border-color:#cde2c7;
-    box-shadow:0 0 0 2px rgba(205,226,199,0.3);
+
+.hint{
+    margin:9px 0 0;
+    color:#8a9187;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.logs-card{
+    text-align:left;
+}
+
+.logs-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.logs-title{
+    margin:0;
+    font-size:18px;
+}
+
+.log-list{
+    display:grid;
+    gap:10px;
+}
+
+.empty{
+    padding:16px;
+    border-radius:18px;
+    background:#fbfaf7;
+    color:#8a9187;
+    text-align:center;
+    font-size:14px;
 }
 
 .note{
-    text-align:left;
-    border-bottom:1px solid #eee;
-    padding:10px;
+    padding:14px;
+    border-radius:18px;
+    background:linear-gradient(180deg, #ffffff, #fbfcf9);
+    border:1px solid var(--line);
 }
-.name{font-weight:bold;}
-.time{font-size:12px;color:#888;}
 
-.alert{
-    color:#6b8e6b;
-    font-weight:bold;
+.note-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:7px;
+}
+
+.name{
+    font-weight:800;
+    color:#3f5f43;
+}
+
+.time{
+    flex:0 0 auto;
+    font-size:12px;
+    color:#8c9388;
+}
+
+.tea-name{
+    margin-bottom:8px;
+    color:#5b6559;
+    font-size:13px;
+}
+
+.note-main{
+    line-height:1.55;
+    font-size:14px;
+}
+
+.note-main strong{
+    color:#496d4b;
+}
+
+.meta-chip{
+    display:inline-flex;
     margin-top:10px;
+    padding:5px 9px;
+    border-radius:999px;
+    background:#f0f7ed;
+    color:#638265;
+    font-size:12px;
+    font-weight:700;
+}
+
+@media (max-width:420px){
+    .container{
+        padding:14px;
+    }
+
+    .card{
+        padding:17px;
+        border-radius:22px;
+    }
+
+    .timer{
+        font-size:50px;
+    }
+
+    .inline-fields{
+        grid-template-columns:1fr;
+    }
+
+    button{
+        padding:10px 13px;
+    }
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<div class="card">
-<h2>🍵 Tea Timer</h2>
-<p>시간을 조절하고 Start를 누르면 차 우리기가 시작됩니다 🍃</p>
+    <section class="card">
+        <h1 class="header-title">🍵 Tea Timer</h1>
+        <p class="guide">
+            시간을 조절하고 Start를 누르면 차 우리기가 시작됩니다 🍃<br>
+            아래에 나만의 차 기록을 친구들과 공유해보세요
+        </p>
 
-<div class="timer" id="timeDisplay">03:00</div>
+        <div class="infusion-row">
+            <span class="infusion-badge" id="infusionDisplay">현재 회차: 1회</span>
+            <button class="mini-btn secondary-btn" id="decreaseInfusionBtn" type="button">-</button>
+            <button class="mini-btn secondary-btn" id="increaseInfusionBtn" type="button">+</button>
+            <button class="mini-btn secondary-btn" id="resetInfusionBtn" type="button">회차 리셋</button>
+        </div>
 
-<!-- ✅ 진행바 -->
-<div class="progress">
-<div class="progress-bar" id="progressBar"></div>
-</div>
+        <div class="timer" id="timeDisplay">03:00</div>
 
-<!-- ✅ 버튼 위치 (오른쪽 + 유지) -->
-<button onclick="adjustTime(-10)">-10초</button>
-<button onclick="adjustTime(10)">+10초</button><br>
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
 
-<button onclick="startTimer()">Start</button>
-<button onclick="pauseTimer()">Pause</button>
-<button onclick="resetTimer()">Reset</button>
+        <div class="preset-scroll" id="presetList">
+            <button class="preset-btn active" type="button" data-preset="default">기본 3분</button>
+            <button class="preset-btn" type="button" data-preset="black">홍차</button>
+            <button class="preset-btn" type="button" data-preset="youngWhite">어린 백차</button>
+            <button class="preset-btn" type="button" data-preset="agedWhite">노백차</button>
+            <button class="preset-btn" type="button" data-preset="taiwanOolong">대만 우롱차</button>
+            <button class="preset-btn" type="button" data-preset="rockTea">암차</button>
+            <button class="preset-btn" type="button" data-preset="puer">보이차</button>
+        </div>
 
-<div id="alert"></div>
-</div>
+        <div class="adjust-controls">
+            <button id="minusBtn" type="button">-10초</button>
+            <button id="plusBtn" type="button">+10초</button>
+            <button id="instantPourBtn" class="instant-btn" type="button">즉시 출수</button>
+        </div>
 
-<!-- ✅ 닉네임 -->
-<div class="card input-card">
-<label class="label">닉네임</label>
-<input id="nickname" placeholder="오늘의 티 메이트는 누구인가요? 🍵">
-</div>
+        <div class="timer-controls">
+            <button id="startBtn" type="button">Start</button>
+            <button id="pauseBtn" type="button" class="secondary-btn">Pause</button>
+            <button id="resetBtn" type="button" class="secondary-btn">Reset</button>
+        </div>
 
-<!-- ✅ 기록 -->
-<div class="card">
-<textarea id="noteInput" placeholder="차 이름 / 물온도 / 시간 / 맛 (부드러움, 쌉쌀, 산뜻 등)"></textarea>
-<button onclick="addNote()">기록 공유</button>
-</div>
+        <div id="alert"></div>
+    </section>
 
-<div class="card" id="notesList"></div>
+    <section class="card form-card">
+        <h2 class="section-title">Tea Log</h2>
+
+        <div class="form-grid">
+            <div class="field">
+                <label for="nickname">닉네임</label>
+                <input id="nickname" placeholder="닉네임을 입력해주세요 🍵">
+            </div>
+
+            <div class="field">
+                <label for="teaName">차 이름</label>
+                <input id="teaName" placeholder="예: 2026년 백호은침, 대홍포, 보이차">
+            </div>
+
+            <div class="inline-fields">
+                <div class="field">
+                    <label for="waterTemp">물 온도</label>
+                    <select id="waterTemp">
+                        <option value="85°C">85°C</option>
+                        <option value="90°C">90°C</option>
+                        <option value="100°C">100°C</option>
+                        <option value="custom">직접 입력</option>
+                    </select>
+                    <input id="customTemp" class="custom-temp" placeholder="예: 92°C">
+                </div>
+
+                <div class="field">
+                    <label for="brewTime">우림 시간</label>
+                    <input id="brewTime" placeholder="타이머 종료/일시정지 시 자동 입력">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="tastingNote">회차 한줄평 / 시음 노트</label>
+                <textarea id="tastingNote" placeholder="예: 향은 산뜻하고, 뒤맛은 살짝 달큰함. 떫음은 거의 없음."></textarea>
+            </div>
+        </div>
+
+        <button id="shareBtn" class="share-btn" type="button">기록 공유</button>
+        <p class="hint">
+            기록 공유 후에도 닉네임, 차 이름, 물 온도는 그대로 유지됩니다. 다음 회차를 이어서 쓰기 편하게 설계했어요.
+        </p>
+    </section>
+
+    <section class="card logs-card">
+        <div class="logs-header">
+            <h2 class="logs-title">친구들과 쌓는 티 기록</h2>
+            <span class="infusion-badge">최근 50개</span>
+        </div>
+        <div id="notesList" class="log-list"></div>
+    </section>
 
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot } 
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    limit,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+/*
+  Firebase 설정
+  - GitHub Pages에서 바로 동작하도록 웹 SDK 모듈 방식 사용
+  - 데이터는 Firestore의 notes 컬렉션에 저장됩니다.
+*/
 const firebaseConfig = {
   apiKey: "AIzaSyBs-rsGjDqPm_NwLe1OfQYYq8mFkUD-Pwg",
   authDomain: "tea-timer-32076.firebaseapp.com",
   projectId: "tea-timer-32076",
   storageBucket: "tea-timer-32076.firebasestorage.app",
   messagingSenderId: "743233533025",
-  appId: "1:743233533025:web:a2d9d7e7054acf51c6a620"
+  appId: "1:743233533025:web:a2d9d7e7054acf51c6a620",
+  measurementId: "G-6P9GG8LYV5"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// 타이머
-let total = 180;
-let remain = total;
-let timer = null;
-
-function updateUI(){
-    document.getElementById("timeDisplay").innerText =
-        `${String(Math.floor(remain/60)).padStart(2,'0')}:${String(remain%60).padStart(2,'0')}`;
-
-    const percent = (remain / total) * 100;
-    document.getElementById("progressBar").style.width = percent + "%";
-}
-
-window.adjustTime = function(s){
-    remain = Math.max(0, remain + s);
-    total = remain;
-    updateUI();
-}
-
-window.startTimer = function(){
-    if(timer) return;
-    timer = setInterval(()=>{
-        if(remain>0){
-            remain--;
-            updateUI();
-        } else {
-            clearInterval(timer);
-            timer=null;
-            done();
-        }
-    },1000);
-}
-
-window.pauseTimer = function(){
-    clearInterval(timer);
-    timer=null;
-}
-
-window.resetTimer = function(){
-    window.pauseTimer();
-    remain=total;
-    updateUI();
-}
-
-function done(){
-    document.getElementById("alert").innerHTML =
-        "<div class='alert'>차가 다 우려졌어요 🍵</div>";
-
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    osc.frequency.value = 700;
-    osc.connect(ctx.destination);
-    osc.start();
-    setTimeout(()=>osc.stop(),300);
-}
-
-// 닉네임 저장
-const nick = document.getElementById("nickname");
-nick.value = localStorage.getItem("nick") || "";
-
-nick.addEventListener("input", ()=>{
-    localStorage.setItem("nick", nick.value);
-});
-
-// Firebase
 const notesRef = collection(db, "notes");
 
-window.addNote = async function(){
-    const name = nick.value || "익명";
-    const text = document.getElementById("noteInput").value;
+/*
+  차 프리셋 정의
+  defaultTime: 프리셋 기본 시간(초)
+  step: +/- 버튼 조정 단위(초)
+*/
+const PRESETS = {
+    default: {
+        label: "기본",
+        defaultTime: 180,
+        step: 10
+    },
+    black: {
+        label: "홍차",
+        defaultTime: 1800,
+        step: 10
+    },
+    youngWhite: {
+        label: "어린 백차",
+        defaultTime: 20,
+        step: 5
+    },
+    agedWhite: {
+        label: "노백차",
+        defaultTime: 30,
+        step: 10
+    },
+    taiwanOolong: {
+        label: "대만 우롱차",
+        defaultTime: 40,
+        step: 10
+    },
+    rockTea: {
+        label: "암차",
+        defaultTime: 10,
+        step: 1
+    },
+    puer: {
+        label: "보이차",
+        defaultTime: 20,
+        step: 5
+    }
+};
 
-    if(!text.trim()) return;
+// DOM 요소
+const timeDisplay = document.getElementById("timeDisplay");
+const progressBar = document.getElementById("progressBar");
+const alertBox = document.getElementById("alert");
 
-    await addDoc(notesRef,{
-        name,
-        note:text,
-        timestamp:Date.now()
-    });
+const presetList = document.getElementById("presetList");
+const minusBtn = document.getElementById("minusBtn");
+const plusBtn = document.getElementById("plusBtn");
+const instantPourBtn = document.getElementById("instantPourBtn");
 
-    document.getElementById("noteInput").value="";
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+const infusionDisplay = document.getElementById("infusionDisplay");
+const decreaseInfusionBtn = document.getElementById("decreaseInfusionBtn");
+const increaseInfusionBtn = document.getElementById("increaseInfusionBtn");
+const resetInfusionBtn = document.getElementById("resetInfusionBtn");
+
+const nicknameInput = document.getElementById("nickname");
+const teaNameInput = document.getElementById("teaName");
+const waterTempSelect = document.getElementById("waterTemp");
+const customTempInput = document.getElementById("customTemp");
+const brewTimeInput = document.getElementById("brewTime");
+const tastingNoteInput = document.getElementById("tastingNote");
+const shareBtn = document.getElementById("shareBtn");
+const notesList = document.getElementById("notesList");
+
+// 타이머 상태값
+let currentPresetKey = "default";
+let totalTime = PRESETS.default.defaultTime;
+let remainingTime = totalTime;
+let adjustStep = PRESETS.default.step;
+let timer = null;
+
+// 회차 및 측정 상태값
+let currentInfusion = Number(localStorage.getItem("teaCurrentInfusion") || "1");
+let timerStartedForInfusion = false;
+let infusionAlreadyAdvanced = false;
+let measuredInfusionForLog = null;
+
+/*
+  시간 표시 함수
+  - 60초 이상: 30:00 형태
+  - 60초 미만: 10초 형태
+*/
+function formatTimer(seconds){
+    const safeSeconds = Math.max(0, seconds);
+
+    if(safeSeconds < 60){
+        return `${safeSeconds}초`;
+    }
+
+    const minutes = Math.floor(safeSeconds / 60);
+    const secs = safeSeconds % 60;
+
+    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
-const q = query(notesRef, orderBy("timestamp","desc"), limit(50));
+/*
+  기록용 시간 표시 함수
+*/
+function formatBrewTime(seconds){
+    const safeSeconds = Math.max(0, seconds);
 
-onSnapshot(q,(snapshot)=>{
-    const list = document.getElementById("notesList");
-    list.innerHTML="";
+    if(safeSeconds === 0){
+        return "0초";
+    }
 
-    snapshot.forEach(doc=>{
-        const n = doc.data();
+    const minutes = Math.floor(safeSeconds / 60);
+    const secs = safeSeconds % 60;
 
-        const div=document.createElement("div");
-        div.className="note";
+    if(minutes > 0 && secs > 0){
+        return `${minutes}분 ${secs}초 우림`;
+    }
 
-        const time = new Date(n.timestamp)
-            .toLocaleTimeString("ko-KR",{hour:'2-digit', minute:'2-digit'});
+    if(minutes > 0){
+        return `${minutes}분 우림`;
+    }
 
-        div.innerHTML=`
-            <div class="name">${n.name}</div>
-            <div>${n.note}</div>
-            <div class="time">${time}</div>
+    return `${secs}초 우림`;
+}
+
+/*
+  타이머 UI 갱신
+*/
+function updateTimerUI(){
+    timeDisplay.innerText = formatTimer(remainingTime);
+
+    const percent = totalTime > 0 ? (remainingTime / totalTime) * 100 : 0;
+    progressBar.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+
+    minusBtn.innerText = `-${adjustStep}초`;
+    plusBtn.innerText = `+${adjustStep}초`;
+
+    if(currentPresetKey === "rockTea"){
+        instantPourBtn.classList.add("show");
+    }else{
+        instantPourBtn.classList.remove("show");
+    }
+}
+
+/*
+  회차 UI 갱신
+*/
+function updateInfusionUI(){
+    currentInfusion = Math.max(1, currentInfusion);
+    infusionDisplay.innerText = `현재 회차: ${currentInfusion}회`;
+    localStorage.setItem("teaCurrentInfusion", String(currentInfusion));
+}
+
+/*
+  회차 증가
+  - 타이머 완료
+  - Start 후 Reset
+  - 즉시 출수
+  상황에서 1회만 증가하도록 보호
+*/
+function advanceInfusionOnce(){
+    if(infusionAlreadyAdvanced) return;
+
+    measuredInfusionForLog = currentInfusion;
+    currentInfusion += 1;
+    infusionAlreadyAdvanced = true;
+
+    updateInfusionUI();
+}
+
+/*
+  프리셋 변경
+*/
+function applyPreset(presetKey){
+    const preset = PRESETS[presetKey];
+    if(!preset) return;
+
+    pauseInternal();
+
+    currentPresetKey = presetKey;
+    totalTime = preset.defaultTime;
+    remainingTime = totalTime;
+    adjustStep = preset.step;
+
+    timerStartedForInfusion = false;
+    infusionAlreadyAdvanced = false;
+    measuredInfusionForLog = null;
+    alertBox.innerHTML = "";
+
+    document.querySelectorAll(".preset-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.preset === presetKey);
+    });
+
+    updateTimerUI();
+}
+
+/*
+  타이머 시간 조정
+*/
+function adjustTime(diff){
+    pauseInternal();
+
+    remainingTime = Math.max(0, remainingTime + diff);
+    totalTime = remainingTime;
+
+    timerStartedForInfusion = false;
+    infusionAlreadyAdvanced = false;
+    measuredInfusionForLog = null;
+    alertBox.innerHTML = "";
+
+    updateTimerUI();
+}
+
+/*
+  타이머 시작
+*/
+function startTimer(){
+    if(timer) return;
+
+    alertBox.innerHTML = "";
+    timerStartedForInfusion = true;
+
+    timer = setInterval(() => {
+        if(remainingTime > 0){
+            remainingTime -= 1;
+            updateTimerUI();
+            return;
+        }
+
+        finishTimer();
+    }, 1000);
+}
+
+/*
+  내부 pause
+*/
+function pauseInternal(){
+    if(timer){
+        clearInterval(timer);
+        timer = null;
+    }
+}
+
+/*
+  Pause 버튼
+  - 진행 중 출수 시 실제 우림 시간을 계산해서 기록칸에 자동 입력
+*/
+function pauseTimer(){
+    pauseInternal();
+
+    if(timerStartedForInfusion && remainingTime < totalTime){
+        const elapsed = totalTime - remainingTime;
+        brewTimeInput.value = formatBrewTime(elapsed);
+        measuredInfusionForLog = currentInfusion;
+    }
+}
+
+/*
+  Reset 버튼
+  - Start 이후 Reset하면 한 회차가 끝난 것으로 간주하고 회차 +1
+  - 이미 타이머 완료로 증가한 경우 중복 증가 방지
+*/
+function resetTimer(){
+    pauseInternal();
+
+    if(timerStartedForInfusion && !infusionAlreadyAdvanced){
+        const elapsed = totalTime - remainingTime;
+
+        if(elapsed > 0){
+            brewTimeInput.value = formatBrewTime(elapsed);
+        }
+
+        advanceInfusionOnce();
+    }
+
+    remainingTime = totalTime;
+    timerStartedForInfusion = false;
+    infusionAlreadyAdvanced = false;
+
+    updateTimerUI();
+}
+
+/*
+  타이머 완료
+  - 설정한 전체 시간이 우림 시간으로 자동 입력
+  - 회차 +1
+*/
+function finishTimer(){
+    pauseInternal();
+
+    remainingTime = 0;
+    updateTimerUI();
+
+    brewTimeInput.value = formatBrewTime(totalTime);
+
+    advanceInfusionOnce();
+    playDoneEffect();
+
+    timerStartedForInfusion = false;
+}
+
+/*
+  암차 전용 즉시 출수
+*/
+function instantPour(){
+    if(currentPresetKey !== "rockTea") return;
+
+    pauseInternal();
+
+    remainingTime = 0;
+    brewTimeInput.value = "즉시 출수";
+    measuredInfusionForLog = currentInfusion;
+
+    updateTimerUI();
+    advanceInfusionOnce();
+    playDoneEffect();
+
+    timerStartedForInfusion = false;
+}
+
+/*
+  완료 효과
+*/
+function playDoneEffect(){
+    alertBox.innerHTML = `<div class="alert">차가 다 우러났어요 🍵</div>`;
+
+    try{
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(660, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.18);
+
+        gain.gain.setValueAtTime(0.001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.48);
+    }catch(error){
+        console.log("Audio notification unavailable:", error);
+    }
+}
+
+/*
+  물 온도 값 가져오기
+*/
+function getWaterTemp(){
+    if(waterTempSelect.value === "custom"){
+        return customTempInput.value.trim() || "직접 입력";
+    }
+
+    return waterTempSelect.value;
+}
+
+/*
+  이어쓰기 UX를 위한 로컬 저장
+*/
+function savePersistentForm(){
+    localStorage.setItem("teaNick", nicknameInput.value);
+    localStorage.setItem("teaName", teaNameInput.value);
+    localStorage.setItem("teaWaterTemp", waterTempSelect.value);
+    localStorage.setItem("teaCustomTemp", customTempInput.value);
+}
+
+/*
+  폼 초기값 복원
+*/
+function restorePersistentForm(){
+    nicknameInput.value = localStorage.getItem("teaNick") || "";
+    teaNameInput.value = localStorage.getItem("teaName") || "";
+
+    const savedTemp = localStorage.getItem("teaWaterTemp");
+    if(savedTemp){
+        waterTempSelect.value = savedTemp;
+    }
+
+    customTempInput.value = localStorage.getItem("teaCustomTemp") || "";
+    toggleCustomTemp();
+}
+
+/*
+  직접 입력 온도 필드 표시/숨김
+*/
+function toggleCustomTemp(){
+    if(waterTempSelect.value === "custom"){
+        customTempInput.classList.add("show");
+    }else{
+        customTempInput.classList.remove("show");
+    }
+}
+
+/*
+  HTML escape
+  - 친구들이 입력한 텍스트를 안전하게 표시하기 위한 처리
+*/
+function escapeHTML(value){
+    return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+/*
+  기록 저장
+  Firestore 데이터 구조:
+  {
+    name: string,
+    teaName: string,
+    waterTemp: string,
+    brewTime: string,
+    infusion: number,
+    tastingNote: string,
+    preset: string,
+    timestamp: number
+  }
+*/
+async function addNote(){
+    const name = nicknameInput.value.trim() || "익명";
+    const teaName = teaNameInput.value.trim() || "이름 없는 차";
+    const waterTemp = getWaterTemp();
+    const brewTime = brewTimeInput.value.trim() || "미기록";
+    const tastingNote = tastingNoteInput.value.trim();
+
+    if(!tastingNote){
+        alert("시음 노트를 한 줄이라도 남겨주세요 🍃");
+        return;
+    }
+
+    const infusionForLog = measuredInfusionForLog || currentInfusion;
+
+    await addDoc(notesRef, {
+        name,
+        teaName,
+        waterTemp,
+        brewTime,
+        infusion: infusionForLog,
+        tastingNote,
+        preset: PRESETS[currentPresetKey].label,
+        timestamp: Date.now()
+    });
+
+    savePersistentForm();
+
+    /*
+      이어 쓰기 UX:
+      닉네임, 차 이름, 물 온도는 유지
+      우림 시간과 시음 노트만 비움
+    */
+    brewTimeInput.value = "";
+    tastingNoteInput.value = "";
+    measuredInfusionForLog = null;
+}
+
+/*
+  기록 렌더링
+*/
+function renderNotes(snapshot){
+    notesList.innerHTML = "";
+
+    if(snapshot.empty){
+        notesList.innerHTML = `<div class="empty">아직 기록이 없어요. 첫 티 로그를 남겨보세요 🍵</div>`;
+        return;
+    }
+
+    snapshot.forEach(doc => {
+        const item = doc.data();
+
+        const createdTime = new Date(item.timestamp)
+            .toLocaleString("ko-KR", {
+                month:"short",
+                day:"numeric",
+                hour:"2-digit",
+                minute:"2-digit"
+            });
+
+        const div = document.createElement("div");
+        div.className = "note";
+
+        div.innerHTML = `
+            <div class="note-top">
+                <div class="name">${escapeHTML(item.name)}</div>
+                <div class="time">${escapeHTML(createdTime)}</div>
+            </div>
+            <div class="tea-name">🍃 ${escapeHTML(item.teaName)} · ${escapeHTML(item.preset || "차")}</div>
+            <div class="note-main">
+                <strong>${escapeHTML(item.infusion)}회차:</strong>
+                ${escapeHTML(item.brewTime)} / ${escapeHTML(item.waterTemp)} / ${escapeHTML(item.tastingNote)}
+            </div>
+            <div class="meta-chip">Tea Log</div>
         `;
 
-        list.appendChild(div);
+        notesList.appendChild(div);
     });
+}
+
+/*
+  이벤트 연결
+*/
+presetList.addEventListener("click", event => {
+    const button = event.target.closest(".preset-btn");
+    if(!button) return;
+
+    applyPreset(button.dataset.preset);
 });
 
-updateUI();
+minusBtn.addEventListener("click", () => adjustTime(-adjustStep));
+plusBtn.addEventListener("click", () => adjustTime(adjustStep));
+instantPourBtn.addEventListener("click", instantPour);
+
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+resetBtn.addEventListener("click", resetTimer);
+
+decreaseInfusionBtn.addEventListener("click", () => {
+    currentInfusion = Math.max(1, currentInfusion - 1);
+    updateInfusionUI();
+});
+
+increaseInfusionBtn.addEventListener("click", () => {
+    currentInfusion += 1;
+    updateInfusionUI();
+});
+
+resetInfusionBtn.addEventListener("click", () => {
+    currentInfusion = 1;
+    measuredInfusionForLog = null;
+    updateInfusionUI();
+});
+
+[nicknameInput, teaNameInput, customTempInput].forEach(input => {
+    input.addEventListener("input", savePersistentForm);
+});
+
+waterTempSelect.addEventListener("change", () => {
+    toggleCustomTemp();
+    savePersistentForm();
+});
+
+shareBtn.addEventListener("click", addNote);
+
+/*
+  Firestore 실시간 구독
+*/
+const q = query(notesRef, orderBy("timestamp", "desc"), limit(50));
+
+onSnapshot(q, snapshot => {
+    renderNotes(snapshot);
+});
+
+/*
+  초기화
+*/
+restorePersistentForm();
+updateInfusionUI();
+updateTimerUI();
 </script>
 
 </body>

@@ -12,6 +12,7 @@
     --green:#cde2c7;
     --green-deep:#5f7f63;
     --green-soft:#eef7eb;
+    --green-soft-2:#f6fbf4;
     --text:#3f4a3f;
     --muted:#7b8278;
     --line:#e7ebe3;
@@ -80,6 +81,19 @@ body{
     color:var(--green-deep);
     font-size:14px;
     font-weight:700;
+}
+
+.session-mini{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:10px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#fbfaf7;
+    border:1px solid var(--line);
+    color:#8a9187;
+    font-size:11px;
 }
 
 .mini-btn{
@@ -302,7 +316,7 @@ select:focus{
 
 .log-list{
     display:grid;
-    gap:10px;
+    gap:12px;
 }
 
 .empty{
@@ -314,55 +328,109 @@ select:focus{
     font-size:14px;
 }
 
-.note{
-    padding:14px;
-    border-radius:18px;
-    background:linear-gradient(180deg, #ffffff, #fbfcf9);
+/* 
+  하나의 찻자리 카드
+  동일 sessionId의 여러 회차가 이 카드 하나에 모입니다.
+*/
+.session-card{
+    padding:16px;
+    border-radius:22px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,253,248,0.96));
     border:1px solid var(--line);
+    box-shadow:0 8px 18px rgba(86, 110, 82, 0.08);
 }
 
-.note-top{
+.session-header{
     display:flex;
     justify-content:space-between;
-    gap:10px;
-    margin-bottom:7px;
+    gap:12px;
+    padding-bottom:12px;
+    margin-bottom:12px;
+    border-bottom:1px dashed #dce7d7;
 }
 
-.name{
-    font-weight:800;
+.session-title-wrap{
+    min-width:0;
+}
+
+.session-name{
+    font-weight:850;
     color:#3f5f43;
+    font-size:15px;
+    margin-bottom:4px;
 }
 
-.time{
-    flex:0 0 auto;
-    font-size:12px;
-    color:#8c9388;
-}
-
-.tea-name{
-    margin-bottom:8px;
-    color:#5b6559;
+.session-tea{
+    color:#5d6b59;
     font-size:13px;
+    line-height:1.35;
+    word-break:break-word;
 }
 
-.note-main{
-    line-height:1.55;
+.session-time{
+    flex:0 0 auto;
+    color:#8c9388;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.infusion-list{
+    display:grid;
+    gap:8px;
+}
+
+.infusion-line{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    padding:9px 10px;
+    border-radius:15px;
+    background:var(--green-soft-2);
+    border:1px solid rgba(205,226,199,0.45);
+    line-height:1.48;
+}
+
+.infusion-dot{
+    flex:0 0 auto;
+    color:#8bb486;
+    font-weight:900;
+    line-height:1.45;
+}
+
+.infusion-text{
+    min-width:0;
+    color:#4a5448;
     font-size:14px;
+    word-break:break-word;
 }
 
-.note-main strong{
+.infusion-text strong{
     color:#496d4b;
+}
+
+.session-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-top:12px;
+    flex-wrap:wrap;
 }
 
 .meta-chip{
     display:inline-flex;
-    margin-top:10px;
     padding:5px 9px;
     border-radius:999px;
     background:#f0f7ed;
     color:#638265;
     font-size:12px;
     font-weight:700;
+}
+
+.session-id-chip{
+    color:#a0a69c;
+    font-size:11px;
 }
 
 @media (max-width:420px){
@@ -386,6 +454,15 @@ select:focus{
     button{
         padding:10px 13px;
     }
+
+    .session-header{
+        flex-direction:column;
+        gap:6px;
+    }
+
+    .session-time{
+        white-space:normal;
+    }
 }
 </style>
 </head>
@@ -406,6 +483,8 @@ select:focus{
             <button class="mini-btn secondary-btn" id="increaseInfusionBtn" type="button">+</button>
             <button class="mini-btn secondary-btn" id="resetInfusionBtn" type="button">회차 리셋</button>
         </div>
+
+        <div class="session-mini" id="sessionDisplay">현재 찻자리 준비 중</div>
 
         <div class="timer" id="timeDisplay">03:00</div>
 
@@ -444,7 +523,7 @@ select:focus{
         <div class="form-grid">
             <div class="field">
                 <label for="nickname">닉네임</label>
-                <input id="nickname" placeholder="닉네임을 입력해주세요 🍵">
+                <input id="nickname" placeholder="오늘의 티 메이트는 누구인가요? 🍵">
             </div>
 
             <div class="field">
@@ -478,7 +557,7 @@ select:focus{
 
         <button id="shareBtn" class="share-btn" type="button">기록 공유</button>
         <p class="hint">
-            기록 공유 후에도 닉네임, 차 이름, 물 온도는 그대로 유지됩니다. 다음 회차를 이어서 쓰기 편하게 설계했어요.
+            같은 차 이름을 유지하면 하나의 찻자리 카드 안에 회차가 차곡차곡 쌓입니다. 차 이름을 바꾸거나 회차 리셋을 누르면 새로운 찻자리로 시작돼요.
         </p>
     </section>
 
@@ -506,8 +585,6 @@ import {
 
 /*
   Firebase 설정
-  - GitHub Pages에서 바로 동작하도록 웹 SDK 모듈 방식 사용
-  - 데이터는 Firestore의 notes 컬렉션에 저장됩니다.
 */
 const firebaseConfig = {
   apiKey: "AIzaSyBs-rsGjDqPm_NwLe1OfQYYq8mFkUD-Pwg",
@@ -525,8 +602,6 @@ const notesRef = collection(db, "notes");
 
 /*
   차 프리셋 정의
-  defaultTime: 프리셋 기본 시간(초)
-  step: +/- 버튼 조정 단위(초)
 */
 const PRESETS = {
     default: {
@@ -581,6 +656,7 @@ const pauseBtn = document.getElementById("pauseBtn");
 const resetBtn = document.getElementById("resetBtn");
 
 const infusionDisplay = document.getElementById("infusionDisplay");
+const sessionDisplay = document.getElementById("sessionDisplay");
 const decreaseInfusionBtn = document.getElementById("decreaseInfusionBtn");
 const increaseInfusionBtn = document.getElementById("increaseInfusionBtn");
 const resetInfusionBtn = document.getElementById("resetInfusionBtn");
@@ -608,9 +684,76 @@ let infusionAlreadyAdvanced = false;
 let measuredInfusionForLog = null;
 
 /*
+  sessionId 상태
+  - 하나의 찻자리 기록을 묶는 기준입니다.
+  - localStorage에 저장해서 새로고침해도 현재 찻자리가 유지됩니다.
+*/
+let currentSessionId = localStorage.getItem("teaCurrentSessionId") || "";
+let lastTeaNameForSession = localStorage.getItem("teaLastTeaNameForSession") || "";
+
+/*
+  sessionId 생성 함수
+  crypto.randomUUID를 우선 사용하고,
+  지원하지 않는 브라우저에서는 timestamp + random 조합으로 생성합니다.
+*/
+function generateSessionId(){
+    if(window.crypto && typeof window.crypto.randomUUID === "function"){
+        return window.crypto.randomUUID();
+    }
+
+    return `tea-session-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+/*
+  현재 sessionId 저장 및 화면 표시
+*/
+function saveSessionState(){
+    localStorage.setItem("teaCurrentSessionId", currentSessionId);
+    localStorage.setItem("teaLastTeaNameForSession", lastTeaNameForSession);
+    updateSessionUI();
+}
+
+/*
+  새 찻자리 시작
+  - 회차 리셋
+  - 차 이름 변경
+  - 최초 접속 시 세션 없음
+*/
+function startNewTeaSession(reason = "new"){
+    currentSessionId = generateSessionId();
+    lastTeaNameForSession = teaNameInput.value.trim();
+
+    measuredInfusionForLog = null;
+    infusionAlreadyAdvanced = false;
+    timerStartedForInfusion = false;
+
+    saveSessionState();
+
+    console.log("새 찻자리 세션 시작:", reason, currentSessionId);
+}
+
+/*
+  최초 접속 시 세션 보장
+*/
+function ensureSession(){
+    if(!currentSessionId){
+        startNewTeaSession("first-visit");
+    }else{
+        updateSessionUI();
+    }
+}
+
+/*
+  현재 찻자리 표시
+  전체 sessionId를 보여주면 길기 때문에 마지막 6자리만 표시합니다.
+*/
+function updateSessionUI(){
+    const shortId = currentSessionId ? currentSessionId.slice(-6) : "준비 중";
+    sessionDisplay.innerText = `현재 찻자리 ID: ${shortId}`;
+}
+
+/*
   시간 표시 함수
-  - 60초 이상: 30:00 형태
-  - 60초 미만: 10초 형태
 */
 function formatTimer(seconds){
     const safeSeconds = Math.max(0, seconds);
@@ -679,10 +822,6 @@ function updateInfusionUI(){
 
 /*
   회차 증가
-  - 타이머 완료
-  - Start 후 Reset
-  - 즉시 출수
-  상황에서 1회만 증가하도록 보호
 */
 function advanceInfusionOnce(){
     if(infusionAlreadyAdvanced) return;
@@ -769,7 +908,7 @@ function pauseInternal(){
 
 /*
   Pause 버튼
-  - 진행 중 출수 시 실제 우림 시간을 계산해서 기록칸에 자동 입력
+  진행 중 출수 시 실제 우림 시간을 계산하여 기록칸에 자동 입력합니다.
 */
 function pauseTimer(){
     pauseInternal();
@@ -783,8 +922,7 @@ function pauseTimer(){
 
 /*
   Reset 버튼
-  - Start 이후 Reset하면 한 회차가 끝난 것으로 간주하고 회차 +1
-  - 이미 타이머 완료로 증가한 경우 중복 증가 방지
+  Start 이후 Reset하면 한 회차가 끝난 것으로 간주하고 회차 +1
 */
 function resetTimer(){
     pauseInternal();
@@ -808,8 +946,6 @@ function resetTimer(){
 
 /*
   타이머 완료
-  - 설정한 전체 시간이 우림 시간으로 자동 입력
-  - 회차 +1
 */
 function finishTimer(){
     pauseInternal();
@@ -923,7 +1059,6 @@ function toggleCustomTemp(){
 
 /*
   HTML escape
-  - 친구들이 입력한 텍스트를 안전하게 표시하기 위한 처리
 */
 function escapeHTML(value){
     return String(value || "")
@@ -935,9 +1070,33 @@ function escapeHTML(value){
 }
 
 /*
+  차 이름 변경 감지
+  요구사항:
+  - 차 이름 Input 값이 변경되었을 때 sessionId 새로 생성
+  - 입력 중 매 글자마다 바뀌면 너무 자주 세션이 생성되므로,
+    change 이벤트를 기준으로 처리합니다.
+  - 즉, 사용자가 입력 후 포커스를 벗어나거나 Enter 등으로 변경이 확정될 때 새 찻자리로 전환됩니다.
+*/
+function handleTeaNameChanged(){
+    const newTeaName = teaNameInput.value.trim();
+
+    savePersistentForm();
+
+    if(newTeaName !== lastTeaNameForSession){
+        startNewTeaSession("tea-name-changed");
+        lastTeaNameForSession = newTeaName;
+        saveSessionState();
+
+        currentInfusion = 1;
+        updateInfusionUI();
+    }
+}
+
+/*
   기록 저장
   Firestore 데이터 구조:
   {
+    sessionId: string,
     name: string,
     teaName: string,
     waterTemp: string,
@@ -960,9 +1119,29 @@ async function addNote(){
         return;
     }
 
+    /*
+      세션이 없으면 저장 직전에도 한 번 더 보장합니다.
+    */
+    if(!currentSessionId){
+        startNewTeaSession("before-save");
+    }
+
+    /*
+      저장 직전 차 이름이 기존 세션 기준 차 이름과 다르면,
+      새로운 차를 시작한 것으로 보고 세션을 새로 만듭니다.
+    */
+    if(teaName !== lastTeaNameForSession){
+        startNewTeaSession("before-save-tea-name-diff");
+        lastTeaNameForSession = teaName;
+        saveSessionState();
+        currentInfusion = Math.max(1, currentInfusion);
+        updateInfusionUI();
+    }
+
     const infusionForLog = measuredInfusionForLog || currentInfusion;
 
     await addDoc(notesRef, {
+        sessionId: currentSessionId,
         name,
         teaName,
         waterTemp,
@@ -986,7 +1165,76 @@ async function addNote(){
 }
 
 /*
+  flat한 Firestore 문서들을 sessionId 기준으로 그룹화합니다.
+  최신 50개 문서만 가져오므로, 오래된 회차가 50개 범위 밖으로 밀리면
+  해당 세션의 일부 회차만 보일 수 있습니다.
+*/
+function groupNotesBySession(items){
+    const groupMap = new Map();
+
+    items.forEach(item => {
+        /*
+          기존에 sessionId 없이 저장된 과거 데이터 대응:
+          sessionId가 없으면 문서 ID 기반으로 독립 세션처럼 처리합니다.
+        */
+        const sessionKey = item.sessionId || `legacy-${item.id}`;
+
+        if(!groupMap.has(sessionKey)){
+            groupMap.set(sessionKey, {
+                sessionId: sessionKey,
+                name: item.name || "익명",
+                teaName: item.teaName || "이름 없는 차",
+                preset: item.preset || "차",
+                latestTimestamp: item.timestamp || 0,
+                entries: []
+            });
+        }
+
+        const group = groupMap.get(sessionKey);
+
+        /*
+          그룹 헤더는 가장 최근 기록 기준으로 업데이트합니다.
+        */
+        if((item.timestamp || 0) >= group.latestTimestamp){
+            group.latestTimestamp = item.timestamp || 0;
+            group.name = item.name || group.name;
+            group.teaName = item.teaName || group.teaName;
+            group.preset = item.preset || group.preset;
+        }
+
+        group.entries.push(item);
+    });
+
+    /*
+      각 세션 내부는 infusion 오름차순.
+      infusion이 같으면 timestamp 오름차순.
+    */
+    const groups = Array.from(groupMap.values()).map(group => {
+        group.entries.sort((a, b) => {
+            const infusionA = Number(a.infusion || 0);
+            const infusionB = Number(b.infusion || 0);
+
+            if(infusionA !== infusionB){
+                return infusionA - infusionB;
+            }
+
+            return Number(a.timestamp || 0) - Number(b.timestamp || 0);
+        });
+
+        return group;
+    });
+
+    /*
+      세션 카드는 최근 기록이 있는 세션이 위로 오도록 정렬합니다.
+    */
+    groups.sort((a, b) => b.latestTimestamp - a.latestTimestamp);
+
+    return groups;
+}
+
+/*
   기록 렌더링
+  이제 개별 기록 카드가 아니라, sessionId 단위의 찻자리 카드로 렌더링합니다.
 */
 function renderNotes(snapshot){
     notesList.innerHTML = "";
@@ -996,31 +1244,61 @@ function renderNotes(snapshot){
         return;
     }
 
-    snapshot.forEach(doc => {
-        const item = doc.data();
+    const flatItems = [];
 
-        const createdTime = new Date(item.timestamp)
-            .toLocaleString("ko-KR", {
+    snapshot.forEach(doc => {
+        flatItems.push({
+            id: doc.id,
+            ...doc.data()
+        });
+    });
+
+    const sessionGroups = groupNotesBySession(flatItems);
+
+    sessionGroups.forEach(group => {
+        const latestTime = group.latestTimestamp
+            ? new Date(group.latestTimestamp).toLocaleString("ko-KR", {
                 month:"short",
                 day:"numeric",
                 hour:"2-digit",
                 minute:"2-digit"
-            });
+            })
+            : "시간 없음";
+
+        const shortSessionId = String(group.sessionId).slice(-6);
+
+        const entryLines = group.entries.map(entry => {
+            return `
+                <div class="infusion-line">
+                    <span class="infusion-dot">•</span>
+                    <div class="infusion-text">
+                        <strong>${escapeHTML(entry.infusion)}회차:</strong>
+                        ${escapeHTML(entry.brewTime)} / ${escapeHTML(entry.waterTemp)} / ${escapeHTML(entry.tastingNote)}
+                    </div>
+                </div>
+            `;
+        }).join("");
 
         const div = document.createElement("div");
-        div.className = "note";
+        div.className = "session-card";
 
         div.innerHTML = `
-            <div class="note-top">
-                <div class="name">${escapeHTML(item.name)}</div>
-                <div class="time">${escapeHTML(createdTime)}</div>
+            <div class="session-header">
+                <div class="session-title-wrap">
+                    <div class="session-name">${escapeHTML(group.name)}</div>
+                    <div class="session-tea">🍃 ${escapeHTML(group.teaName)} / ${escapeHTML(group.preset)}</div>
+                </div>
+                <div class="session-time">${escapeHTML(latestTime)}</div>
             </div>
-            <div class="tea-name">🍃 ${escapeHTML(item.teaName)} · ${escapeHTML(item.preset || "차")}</div>
-            <div class="note-main">
-                <strong>${escapeHTML(item.infusion)}회차:</strong>
-                ${escapeHTML(item.brewTime)} / ${escapeHTML(item.waterTemp)} / ${escapeHTML(item.tastingNote)}
+
+            <div class="infusion-list">
+                ${entryLines}
             </div>
-            <div class="meta-chip">Tea Log</div>
+
+            <div class="session-footer">
+                <span class="meta-chip">찻자리 기록 ${group.entries.length}개</span>
+                <span class="session-id-chip">session ${escapeHTML(shortSessionId)}</span>
+            </div>
         `;
 
         notesList.appendChild(div);
@@ -1059,11 +1337,21 @@ resetInfusionBtn.addEventListener("click", () => {
     currentInfusion = 1;
     measuredInfusionForLog = null;
     updateInfusionUI();
+
+    /*
+      요구사항:
+      회차 리셋 버튼을 누르면 새로운 차를 마시기 시작한다는 의미로
+      sessionId를 새로 생성합니다.
+    */
+    startNewTeaSession("infusion-reset");
 });
 
-[nicknameInput, teaNameInput, customTempInput].forEach(input => {
-    input.addEventListener("input", savePersistentForm);
-});
+nicknameInput.addEventListener("input", savePersistentForm);
+
+teaNameInput.addEventListener("input", savePersistentForm);
+teaNameInput.addEventListener("change", handleTeaNameChanged);
+
+customTempInput.addEventListener("input", savePersistentForm);
 
 waterTempSelect.addEventListener("change", () => {
     toggleCustomTemp();
@@ -1085,6 +1373,17 @@ onSnapshot(q, snapshot => {
   초기화
 */
 restorePersistentForm();
+ensureSession();
+
+/*
+  복원된 차 이름과 세션 기준 차 이름이 비어있으면
+  현재 차 이름을 세션 기준으로 설정합니다.
+*/
+if(!lastTeaNameForSession && teaNameInput.value.trim()){
+    lastTeaNameForSession = teaNameInput.value.trim();
+    saveSessionState();
+}
+
 updateInfusionUI();
 updateTimerUI();
 </script>

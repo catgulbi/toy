@@ -1,460 +1,445 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset-2:#f6fbf4;<meta charset="UTF-8" />
-    --text:#3f4a3f;
-    --muted:#7b8278;
-    --line:#e7ebe3;
-    --shadow:0 10px 28px rgba(85, 105, 82, 0.12);
-}
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background:
-        radial-gradient(circle at top left, rgba(205,226,199,0.45), transparent 28%),
+<meta charset="UTF-8" />
+-gradient(circle at top left, rgba(205,226,199,0.45), transparent 28%),<meta name="viewport" content="width=device-width, initial-scale=1.0" />
         linear-gradient(180deg, #f7f3ef 0%, #f9f6f1 100%);
-    color:var(--text);
+    color: var(--text);
 }
 
-.container{
-    max-width:560px;
-    margin:auto;
-    padding:20px;
+.container {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.card{
-    background:rgba(255,255,255,0.94);
-    border:1px solid rgba(205,226,199,0.45);
-    border-radius:24px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:var(--shadow);
-    text-align:center;
+.card {
+    background: rgba(255,255,255,0.94);
+    border: 1px solid rgba(205,226,199,0.45);
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    text-align: center;
 }
 
-.header-title{
-    margin:2px 0 8px;
-    font-size:27px;
-    letter-spacing:-0.4px;
+.header-title {
+    margin: 2px 0 8px;
+    font-size: 27px;
+    letter-spacing: -0.4px;
 }
 
-.guide{
-    margin:0;
-    color:var(--muted);
-    font-size:14px;
-    line-height:1.55;
+.guide {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
 }
 
-.infusion-row{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin-top:16px;
-    flex-wrap:wrap;
+.infusion-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
 }
 
-.infusion-badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:8px 13px;
-    border-radius:999px;
-    background:var(--green-soft);
-    color:var(--green-deep);
-    font-size:14px;
-    font-weight:700;
+.infusion-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: var(--green-soft);
+    color: var(--green-deep);
+    font-size: 14px;
+    font-weight: 700;
 }
 
-.session-mini{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    margin-top:10px;
-    padding:6px 10px;
-    border-radius:999px;
-    background:#fbfaf7;
-    border:1px solid var(--line);
-    color:#8a9187;
-    font-size:11px;
+.session-mini {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #fbfaf7;
+    border: 1px solid var(--line);
+    color: #8a9187;
+    font-size: 11px;
 }
 
-.mini-btn{
-    padding:7px 10px;
-    font-size:12px;
-    border-radius:999px;
+.mini-btn {
+    padding: 7px 10px;
+    font-size: 12px;
+    border-radius: 999px;
 }
 
-.timer{
-    font-size:58px;
-    font-weight:800;
-    letter-spacing:-1px;
-    margin:18px 0 12px;
-    color:#334236;
+.timer {
+    font-size: 58px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 18px 0 12px;
+    color: #334236;
 }
 
-.progress{
-    height:10px;
-    background:#edf0ea;
-    border-radius:999px;
-    overflow:hidden;
-    margin:8px 0 18px;
+.progress {
+    height: 10px;
+    background: #edf0ea;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 8px 0 18px;
 }
 
-.progress-bar{
-    height:100%;
-    width:100%;
-    background:linear-gradient(90deg, #b9d9b5, #d8ecd2);
-    border-radius:999px;
-    transition:width 0.25s ease;
+.progress-bar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #b9d9b5, #d8ecd2);
+    border-radius: 999px;
+    transition: width 0.25s ease;
 }
 
-.preset-scroll{
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding:2px 2px 10px;
-    margin:0 -2px 10px;
-    scrollbar-width:none;
+.preset-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 10px;
+    margin: 0 -2px 10px;
+    scrollbar-width: none;
 }
 
-.preset-scroll::-webkit-scrollbar{
-    display:none;
+.preset-scroll::-webkit-scrollbar {
+    display: none;
 }
 
-.preset-btn{
-    flex:0 0 auto;
-    padding:8px 11px;
-    border-radius:999px;
-    background:#f8fbf6;
-    border:1px solid var(--line);
-    color:#58705a;
-    font-size:12.5px;
-    font-weight:700;
-    white-space:nowrap;
+.preset-btn {
+    flex: 0 0 auto;
+    padding: 8px 11px;
+    border-radius: 999px;
+    background: #f8fbf6;
+    border: 1px solid var(--line);
+    color: #58705a;
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-.preset-btn.active{
-    background:var(--green);
-    border-color:#bad6b6;
-    color:#34573a;
-    box-shadow:0 5px 14px rgba(104, 133, 101, 0.18);
+.preset-btn.active {
+    background: var(--green);
+    border-color: #bad6b6;
+    color: #34573a;
+    box-shadow: 0 5px 14px rgba(104, 133, 101, 0.18);
 }
 
 .timer-controls,
-.adjust-controls{
-    display:flex;
-    justify-content:center;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-top:8px;
+.adjust-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
 }
 
-button{
-    padding:11px 15px;
-    border:none;
-    border-radius:999px;
-    background:var(--green);
-    color:#38573c;
-    cursor:pointer;
-    transition:transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
-    font-weight:700;
+button {
+    padding: 11px 15px;
+    border: none;
+    border-radius: 999px;
+    background: var(--green);
+    color: #38573c;
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    font-weight: 700;
 }
 
-button:hover{
-    transform:translateY(-1px);
-    box-shadow:0 6px 14px rgba(84, 105, 80, 0.16);
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(84,105,80,0.16);
 }
 
-button:active{
-    transform:scale(0.97);
+button:active {
+    transform: scale(0.97);
 }
 
-.secondary-btn{
-    background:#f1f6ef;
-    color:#5f7f63;
+.secondary-btn {
+    background: #f1f6ef;
+    color: #5f7f63;
 }
 
-.instant-btn{
-    display:none;
-    background:#e7f3df;
-    color:#466c45;
-    border:1px solid #c9e1c2;
+.instant-btn {
+    display: none;
+    background: #e7f3df;
+    color: #466c45;
+    border: 1px solid #c9e1c2;
 }
 
-.instant-btn.show{
-    display:inline-flex;
+.instant-btn.show {
+    display: inline-flex;
 }
 
-.alert{
-    display:inline-block;
-    margin-top:14px;
-    padding:9px 13px;
-    border-radius:999px;
-    background:#f0f8ed;
-    color:#5f7f63;
-    font-weight:800;
-    animation:softPop 0.45s ease;
+.alert {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 9px 13px;
+    border-radius: 999px;
+    background: #f0f8ed;
+    color: #5f7f63;
+    font-weight: 800;
+    animation: softPop 0.45s ease;
 }
 
-@keyframes softPop{
-    0%{ transform:scale(0.88); opacity:0; }
-    100%{ transform:scale(1); opacity:1; }
+@keyframes softPop {
+    0% { transform: scale(0.88); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-.form-card{
-    text-align:left;
+.form-card {
+    text-align: left;
 }
 
-.section-title{
-    margin:0 0 12px;
-    font-size:18px;
-    color:#405344;
+.section-title {
+    margin: 0 0 12px;
+    font-size: 18px;
+    color: #405344;
 }
 
-.form-grid{
-    display:grid;
-    gap:12px;
+.form-grid {
+    display: grid;
+    gap: 12px;
 }
 
-.field label{
-    display:block;
-    margin-bottom:6px;
-    color:#6f786c;
-    font-size:13px;
-    font-weight:700;
+.field label {
+    display: block;
+    margin-bottom: 6px;
+    color: #6f786c;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 input,
 textarea,
-select{
-    width:100%;
-    padding:12px 13px;
-    border-radius:14px;
-    border:1px solid var(--line);
-    background:#fbfaf7;
-    color:var(--text);
-    font-size:14px;
-    transition:border 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+select {
+    width: 100%;
+    padding: 12px 13px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #fbfaf7;
+    color: var(--text);
+    font-size: 14px;
+    transition: border 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
-textarea{
-    min-height:94px;
-    resize:vertical;
-    line-height:1.5;
+textarea {
+    min-height: 94px;
+    resize: vertical;
+    line-height: 1.5;
 }
 
 input:focus,
 textarea:focus,
-select:focus{
-    outline:none;
-    border-color:#b8d8b2;
-    box-shadow:0 0 0 3px rgba(205,226,199,0.45);
-    background:#ffffff;
+select:focus {
+    outline: none;
+    border-color: #b8d8b2;
+    box-shadow: 0 0 0 3px rgba(205,226,199,0.45);
+    background: #ffffff;
 }
 
-.inline-fields{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:10px;
+.inline-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
 }
 
-.custom-temp{
-    display:none;
-    margin-top:8px;
+.custom-temp {
+    display: none;
+    margin-top: 8px;
 }
 
-.custom-temp.show{
-    display:block;
+.custom-temp.show {
+    display: block;
 }
 
-.readonly-input{
-    background:#f3f7f0;
-    color:#5f7f63;
-    font-weight:700;
+.readonly-input {
+    background: #f3f7f0;
+    color: #5f7f63;
+    font-weight: 700;
 }
 
-.share-btn{
-    width:100%;
-    margin-top:14px;
-    padding:13px 16px;
+.share-btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 13px 16px;
 }
 
-.hint{
-    margin:9px 0 0;
-    color:#8a9187;
-    font-size:12px;
-    line-height:1.45;
+.hint {
+    margin: 9px 0 0;
+    color: #8a9187;
+    font-size: 12px;
+    line-height: 1.45;
 }
 
-.logs-card{
-    text-align:left;
+.logs-card {
+    text-align: left;
 }
 
-.logs-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:12px;
+.logs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
-.logs-title{
-    margin:0;
-    font-size:18px;
+.logs-title {
+    margin: 0;
+    font-size: 18px;
 }
 
-.log-list{
-    display:grid;
-    gap:12px;
+.log-list {
+    display: grid;
+    gap: 12px;
 }
 
-.empty{
-    padding:16px;
-    border-radius:18px;
-    background:#fbfaf7;
-    color:#8a9187;
-    text-align:center;
-    font-size:14px;
+.empty {
+    padding: 16px;
+    border-radius: 18px;
+    background: #fbfaf7;
+    color: #8a9187;
+    text-align: center;
+    font-size: 14px;
 }
 
-.session-card{
-    padding:16px;
-    border-radius:22px;
-    background:
-        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,253,248,0.96));
-    border:1px solid var(--line);
-    box-shadow:0 8px 18px rgba(86, 110, 82, 0.08);
+.session-card {
+    padding: 16px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,253,248,0.96));
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 18px rgba(86,110,82,0.08);
 }
 
-.session-header{
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-    padding-bottom:12px;
-    margin-bottom:12px;
-    border-bottom:1px dashed #dce7d7;
+.session-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed #dce7d7;
 }
 
-.session-title-wrap{
-    min-width:0;
+.session-title-wrap {
+    min-width: 0;
 }
 
-.session-name{
-    font-weight:850;
-    color:#3f5f43;
-    font-size:15px;
-    margin-bottom:4px;
+.session-name {
+    font-weight: 850;
+    color: #3f5f43;
+    font-size: 15px;
+    margin-bottom: 4px;
 }
 
-.session-tea{
-    color:#5d6b59;
-    font-size:13px;
-    line-height:1.35;
-    word-break:break-word;
+.session-tea {
+    color: #5d6b59;
+    font-size: 13px;
+    line-height: 1.35;
+    word-break: break-word;
 }
 
-.session-time{
-    flex:0 0 auto;
-    color:#8c9388;
-    font-size:12px;
-    white-space:nowrap;
+.session-time {
+    flex: 0 0 auto;
+    color: #8c9388;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
-.infusion-list{
-    display:grid;
-    gap:8px;
+.infusion-list {
+    display: grid;
+    gap: 8px;
 }
 
-.infusion-line{
-    display:flex;
-    align-items:flex-start;
-    gap:8px;
-    padding:9px 10px;
-    border-radius:15px;
-    background:var(--green-soft-2);
-    border:1px solid rgba(205,226,199,0.45);
-    line-height:1.48;
+.infusion-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 15px;
+    background: var(--green-soft-2);
+    border: 1px solid rgba(205,226,199,0.45);
+    line-height: 1.48;
 }
 
-.infusion-dot{
-    flex:0 0 auto;
-    color:#8bb486;
-    font-weight:900;
-    line-height:1.45;
+.infusion-dot {
+    flex: 0 0 auto;
+    color: #8bb486;
+    font-weight: 900;
+    line-height: 1.45;
 }
 
-.infusion-text{
-    min-width:0;
-    color:#4a5448;
-    font-size:14px;
-    word-break:break-word;
+.infusion-text {
+    min-width: 0;
+    color: #4a5448;
+    font-size: 14px;
+    word-break: break-word;
 }
 
-.infusion-text strong{
-    color:#496d4b;
+.infusion-text strong {
+    color: #496d4b;
 }
 
-.session-footer{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    margin-top:12px;
-    flex-wrap:wrap;
+.session-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
 }
 
-.meta-chip{
-    display:inline-flex;
-    padding:5px 9px;
-    border-radius:999px;
-    background:#f0f7ed;
-    color:#638265;
-    font-size:12px;
-    font-weight:700;
+.meta-chip {
+    display: inline-flex;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #f0f7ed;
+    color: #638265;
+    font-size: 12px;
+    font-weight: 700;
 }
 
-.session-id-chip{
-    color:#a0a69c;
-    font-size:11px;
+.session-id-chip {
+    color: #a0a69c;
+    font-size: 11px;
 }
 
-@media (max-width:520px){
-    .inline-fields{
-        grid-template-columns:1fr;
+@media (max-width: 520px) {
+    .inline-fields {
+        grid-template-columns: 1fr;
     }
 }
 
-@media (max-width:420px){
-    .container{
-        padding:14px;
+@media (max-width: 420px) {
+    .container {
+        padding: 14px;
     }
 
-    .card{
-        padding:17px;
-        border-radius:22px;
+    .card {
+        padding: 17px;
+        border-radius: 22px;
     }
 
-    .timer{
-        font-size:50px;
+    .timer {
+        font-size: 50px;
     }
 
-    button{
-        padding:10px 13px;
+    button {
+        padding: 10px 13px;
     }
 
-    .session-header{
-        flex-direction:column;
-        gap:6px;
+    .session-header {
+        flex-direction: column;
+        gap: 6px;
     }
 
-    .session-time{
-        white-space:normal;
+    .session-time {
+        white-space: normal;
     }
 }
 </style>
@@ -553,8 +538,10 @@ select:focus{
         </div>
 
         <button id="shareBtn" class="share-btn" type="button">기록 공유</button>
+
         <p class="hint">
-            같은 차 이름을 유지하면 하나의 찻자리 카드 안에 회차가 차곡차곡 쌓입니다. 새로운 차를 시작하면 차 이름과 회차가 초기화돼요.
+            같은 차 이름을 유지하면 하나의 찻자리 카드 안에 회차가 차곡차곡 쌓입니다.
+            새로운 차를 시작하면 차 이름과 회차가 초기화돼요.
         </p>
     </section>
 
@@ -581,13 +568,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBs-rsGjDqPm_NwLe1OfQYYq8mFkUD-Pwg",
-  authDomain: "tea-timer-32076.firebaseapp.com",
-  projectId: "tea-timer-32076",
-  storageBucket: "tea-timer-32076.firebasestorage.app",
-  messagingSenderId: "743233533025",
-  appId: "1:743233533025:web:a2d9d7e7054acf51c6a620",
-  measurementId: "G-6P9GG8LYV5"
+    apiKey: "AIzaSyBs-rsGjDqPm_NwLe1OfQYYq8mFkUD-Pwg",
+    authDomain: "tea-timer-32076.firebaseapp.com",
+    projectId: "tea-timer-32076",
+    storageBucket: "tea-timer-32076.firebasestorage.app",
+    messagingSenderId: "743233533025",
+    appId: "1:743233533025:web:a2d9d7e7054acf51c6a620",
+    measurementId: "G-6P9GG8LYV5"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -674,21 +661,21 @@ let timerStartedForInfusion = false;
 let currentSessionId = localStorage.getItem("teaCurrentSessionId") || "";
 let lastTeaNameForSession = localStorage.getItem("teaLastTeaNameForSession") || "";
 
-function generateSessionId(){
-    if(window.crypto && typeof window.crypto.randomUUID === "function"){
+function generateSessionId() {
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
         return window.crypto.randomUUID();
     }
 
     return `tea-session-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-function saveSessionState(){
+function saveSessionState() {
     localStorage.setItem("teaCurrentSessionId", currentSessionId);
     localStorage.setItem("teaLastTeaNameForSession", lastTeaNameForSession);
     updateSessionUI();
 }
 
-function startNewTeaSession(reason = "new"){
+function startNewTeaSession(reason = "new") {
     currentSessionId = generateSessionId();
     lastTeaNameForSession = teaNameInput.value.trim();
     measuredInfusionForLog = null;
@@ -697,32 +684,32 @@ function startNewTeaSession(reason = "new"){
     console.log("새 찻자리 세션 시작:", reason, currentSessionId);
 }
 
-function ensureSession(){
-    if(!currentSessionId){
+function ensureSession() {
+    if (!currentSessionId) {
         startNewTeaSession("first-visit");
-    }else{
+    } else {
         updateSessionUI();
     }
 }
 
-function updateSessionUI(){
+function updateSessionUI() {
     const shortId = currentSessionId ? currentSessionId.slice(-6) : "준비 중";
     sessionDisplay.innerText = `현재 찻자리 ID: ${shortId}`;
 }
 
-function getCurrentPresetDefaultTime(){
+function getCurrentPresetDefaultTime() {
     return PRESETS[currentPresetKey].defaultTime;
 }
 
-function getLogInfusionNumber(){
+function getLogInfusionNumber() {
     return measuredInfusionForLog || currentInfusion;
 }
 
-function updateLogInfusionUI(){
+function updateLogInfusionUI() {
     logInfusionInput.value = `${getLogInfusionNumber()}회차`;
 }
 
-function prepareNextInfusionTimer(delay = 650){
+function prepareNextInfusionTimer(delay = 650) {
     setTimeout(() => {
         totalTime = getCurrentPresetDefaultTime();
         remainingTime = totalTime;
@@ -732,10 +719,10 @@ function prepareNextInfusionTimer(delay = 650){
     }, delay);
 }
 
-function formatTimer(seconds){
+function formatTimer(seconds) {
     const safeSeconds = Math.max(0, seconds);
 
-    if(safeSeconds < 60){
+    if (safeSeconds < 60) {
         return `${safeSeconds}초`;
     }
 
@@ -745,28 +732,28 @@ function formatTimer(seconds){
     return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
-function formatBrewTime(seconds){
+function formatBrewTime(seconds) {
     const safeSeconds = Math.max(0, seconds);
 
-    if(safeSeconds === 0){
+    if (safeSeconds === 0) {
         return "0초";
     }
 
     const minutes = Math.floor(safeSeconds / 60);
     const secs = safeSeconds % 60;
 
-    if(minutes > 0 && secs > 0){
+    if (minutes > 0 && secs > 0) {
         return `${minutes}분 ${secs}초 우림`;
     }
 
-    if(minutes > 0){
+    if (minutes > 0) {
         return `${minutes}분 우림`;
     }
 
     return `${secs}초 우림`;
 }
 
-function updateTimerUI(){
+function updateTimerUI() {
     timeDisplay.innerText = formatTimer(remainingTime);
 
     const percent = totalTime > 0 ? (remainingTime / totalTime) * 100 : 0;
@@ -775,29 +762,29 @@ function updateTimerUI(){
     minusBtn.innerText = `-${adjustStep}초`;
     plusBtn.innerText = `+${adjustStep}초`;
 
-    if(currentPresetKey === "rockTea"){
+    if (currentPresetKey === "rockTea") {
         instantPourBtn.classList.add("show");
-    }else{
+    } else {
         instantPourBtn.classList.remove("show");
     }
 }
 
-function updateInfusionUI(){
+function updateInfusionUI() {
     currentInfusion = Math.max(1, currentInfusion);
     infusionDisplay.innerText = `현재 회차: ${currentInfusion}회`;
     localStorage.setItem("teaCurrentInfusion", String(currentInfusion));
     updateLogInfusionUI();
 }
 
-function advanceInfusion(){
+function advanceInfusion() {
     measuredInfusionForLog = currentInfusion;
     currentInfusion += 1;
     updateInfusionUI();
 }
 
-function applyPreset(presetKey){
+function applyPreset(presetKey) {
     const preset = PRESETS[presetKey];
-    if(!preset) return;
+    if (!preset) return;
 
     pauseInternal();
 
@@ -818,7 +805,7 @@ function applyPreset(presetKey){
     updateLogInfusionUI();
 }
 
-function adjustTime(diff){
+function adjustTime(diff) {
     pauseInternal();
 
     remainingTime = Math.max(0, remainingTime + diff);
@@ -832,10 +819,10 @@ function adjustTime(diff){
     updateLogInfusionUI();
 }
 
-function startTimer(){
-    if(timer) return;
+function startTimer() {
+    if (timer) return;
 
-    if(remainingTime <= 0){
+    if (remainingTime <= 0) {
         totalTime = getCurrentPresetDefaultTime();
         remainingTime = totalTime;
         updateTimerUI();
@@ -847,7 +834,7 @@ function startTimer(){
     updateLogInfusionUI();
 
     timer = setInterval(() => {
-        if(remainingTime > 0){
+        if (remainingTime > 0) {
             remainingTime -= 1;
             updateTimerUI();
             return;
@@ -857,17 +844,17 @@ function startTimer(){
     }, 1000);
 }
 
-function pauseInternal(){
-    if(timer){
+function pauseInternal() {
+    if (timer) {
         clearInterval(timer);
         timer = null;
     }
 }
 
-function pauseTimer(){
+function pauseTimer() {
     pauseInternal();
 
-    if(timerStartedForInfusion && remainingTime < totalTime){
+    if (timerStartedForInfusion && remainingTime < totalTime) {
         const elapsed = totalTime - remainingTime;
         brewTimeInput.value = formatBrewTime(elapsed);
         measuredInfusionForLog = currentInfusion;
@@ -875,13 +862,13 @@ function pauseTimer(){
     }
 }
 
-function resetTimer(){
+function resetTimer() {
     pauseInternal();
 
-    if(timerStartedForInfusion){
+    if (timerStartedForInfusion) {
         const elapsed = totalTime - remainingTime;
 
-        if(elapsed > 0){
+        if (elapsed > 0) {
             brewTimeInput.value = formatBrewTime(elapsed);
             advanceInfusion();
         }
@@ -895,7 +882,7 @@ function resetTimer(){
     updateLogInfusionUI();
 }
 
-function finishTimer(){
+function finishTimer() {
     pauseInternal();
 
     const finishedBrewTime = totalTime;
@@ -911,8 +898,8 @@ function finishTimer(){
     prepareNextInfusionTimer();
 }
 
-function instantPour(){
-    if(currentPresetKey !== "rockTea") return;
+function instantPour() {
+    if (currentPresetKey !== "rockTea") return;
 
     pauseInternal();
 
@@ -927,10 +914,10 @@ function instantPour(){
     prepareNextInfusionTimer();
 }
 
-function playDoneEffect(){
+function playDoneEffect() {
     alertBox.innerHTML = `<div class="alert">차가 다 우러났어요 🍵</div>`;
 
-    try{
+    try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -948,32 +935,32 @@ function playDoneEffect(){
 
         osc.start();
         osc.stop(ctx.currentTime + 0.48);
-    }catch(error){
+    } catch (error) {
         console.log("Audio notification unavailable:", error);
     }
 }
 
-function getWaterTemp(){
-    if(waterTempSelect.value === "custom"){
+function getWaterTemp() {
+    if (waterTempSelect.value === "custom") {
         return customTempInput.value.trim() || "직접 입력";
     }
 
     return waterTempSelect.value;
 }
 
-function savePersistentForm(){
+function savePersistentForm() {
     localStorage.setItem("teaNick", nicknameInput.value);
     localStorage.setItem("teaName", teaNameInput.value);
     localStorage.setItem("teaWaterTemp", waterTempSelect.value);
     localStorage.setItem("teaCustomTemp", customTempInput.value);
 }
 
-function restorePersistentForm(){
+function restorePersistentForm() {
     nicknameInput.value = localStorage.getItem("teaNick") || "";
     teaNameInput.value = localStorage.getItem("teaName") || "";
 
     const savedTemp = localStorage.getItem("teaWaterTemp");
-    if(savedTemp){
+    if (savedTemp) {
         waterTempSelect.value = savedTemp;
     }
 
@@ -981,15 +968,15 @@ function restorePersistentForm(){
     toggleCustomTemp();
 }
 
-function toggleCustomTemp(){
-    if(waterTempSelect.value === "custom"){
+function toggleCustomTemp() {
+    if (waterTempSelect.value === "custom") {
         customTempInput.classList.add("show");
-    }else{
+    } else {
         customTempInput.classList.remove("show");
     }
 }
 
-function escapeHTML(value){
+function escapeHTML(value) {
     return String(value || "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
@@ -998,12 +985,12 @@ function escapeHTML(value){
         .replaceAll("'", "&#039;");
 }
 
-function handleTeaNameChanged(){
+function handleTeaNameChanged() {
     const newTeaName = teaNameInput.value.trim();
 
     savePersistentForm();
 
-    if(newTeaName !== lastTeaNameForSession){
+    if (newTeaName !== lastTeaNameForSession) {
         startNewTeaSession("tea-name-changed");
         lastTeaNameForSession = newTeaName;
         saveSessionState();
@@ -1014,30 +1001,26 @@ function handleTeaNameChanged(){
     }
 }
 
-async function addNote(){
+async function addNote() {
     const name = nicknameInput.value.trim() || "익명";
     const teaName = teaNameInput.value.trim() || "이름 없는 차";
     const waterTemp = getWaterTemp();
     const brewTime = brewTimeInput.value.trim() || "미기록";
     const tastingNote = tastingNoteInput.value.trim();
 
-    if(!tastingNote){
+    if (!tastingNote) {
         alert("시음 노트를 한 줄이라도 남겨주세요 🍃");
         return;
     }
 
-    if(!currentSessionId){
+    if (!currentSessionId) {
         startNewTeaSession("before-save");
     }
 
-    if(teaName !== lastTeaNameForSession){
-        startNewTeaSession("before-save-tea-name-diff");
+    if (teaName !== lastTeaNameForSession) {
+        currentSessionId = generateSessionId();
         lastTeaNameForSession = teaName;
         saveSessionState();
-
-        currentInfusion = 1;
-        measuredInfusionForLog = null;
-        updateInfusionUI();
     }
 
     const infusionForLog = getLogInfusionNumber();
@@ -1062,13 +1045,13 @@ async function addNote(){
     updateLogInfusionUI();
 }
 
-function groupNotesBySession(items){
+function groupNotesBySession(items) {
     const groupMap = new Map();
 
     items.forEach(item => {
         const sessionKey = item.sessionId || `legacy-${item.id}`;
 
-        if(!groupMap.has(sessionKey)){
+        if (!groupMap.has(sessionKey)) {
             groupMap.set(sessionKey, {
                 sessionId: sessionKey,
                 name: item.name || "익명",
@@ -1081,7 +1064,7 @@ function groupNotesBySession(items){
 
         const group = groupMap.get(sessionKey);
 
-        if((item.timestamp || 0) >= group.latestTimestamp){
+        if ((item.timestamp || 0) >= group.latestTimestamp) {
             group.latestTimestamp = item.timestamp || 0;
             group.name = item.name || group.name;
             group.teaName = item.teaName || group.teaName;
@@ -1096,7 +1079,7 @@ function groupNotesBySession(items){
             const infusionA = Number(a.infusion || 0);
             const infusionB = Number(b.infusion || 0);
 
-            if(infusionA !== infusionB){
+            if (infusionA !== infusionB) {
                 return infusionA - infusionB;
             }
 
@@ -1111,10 +1094,10 @@ function groupNotesBySession(items){
     return groups;
 }
 
-function renderNotes(snapshot){
+function renderNotes(snapshot) {
     notesList.innerHTML = "";
 
-    if(snapshot.empty){
+    if (snapshot.empty) {
         notesList.innerHTML = `<div class="empty">아직 기록이 없어요. 첫 티 로그를 남겨보세요 🍵</div>`;
         return;
     }
@@ -1133,10 +1116,10 @@ function renderNotes(snapshot){
     sessionGroups.forEach(group => {
         const latestTime = group.latestTimestamp
             ? new Date(group.latestTimestamp).toLocaleString("ko-KR", {
-                month:"short",
-                day:"numeric",
-                hour:"2-digit",
-                minute:"2-digit"
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
             })
             : "시간 없음";
 
@@ -1180,7 +1163,7 @@ function renderNotes(snapshot){
     });
 }
 
-function startFreshTea(){
+function startFreshTea() {
     pauseInternal();
 
     currentInfusion = 1;
@@ -1205,7 +1188,7 @@ function startFreshTea(){
 
 presetList.addEventListener("click", event => {
     const button = event.target.closest(".preset-btn");
-    if(!button) return;
+    if (!button) return;
 
     applyPreset(button.dataset.preset);
 });
@@ -1255,7 +1238,7 @@ onSnapshot(q, snapshot => {
 restorePersistentForm();
 ensureSession();
 
-if(!lastTeaNameForSession && teaNameInput.value.trim()){
+if (!lastTeaNameForSession && teaNameInput.value.trim()) {
     lastTeaNameForSession = teaNameInput.value.trim();
     saveSessionState();
 }
@@ -1264,16 +1247,29 @@ updateInfusionUI();
 updateTimerUI();
 updateLogInfusionUI();
 </script>
-
 </body>
 </html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tea Timer 🍵</title>
 
 <style>
-:root{
-    --bg:#f7f3ef;
-    --card:#ffffff;
-    --green:#cde2c7;
-    --green-deep:#5f7f63;
-    --green-soft:#eef7eb;
+:root {
+    --bg: #f7f3ef;
+    --card: #ffffff;
+    --green: #cde2c7;
+    --green-deep: #5f7f63;
+    --green-soft: #eef7eb;
+    --green-soft-2: #f6fbf4;
+    --text: #3f4a3f;
+    --muted: #7b8278;
+    --line: #e7ebe3;
+    --shadow: 0 10px 28px rgba(85, 105, 82, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:

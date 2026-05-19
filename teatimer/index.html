@@ -1,7 +1,126 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset(90deg, #b9d9b5, #d8ecd2);<meta charset="UTF-8" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tea Timer 🍵</title>
+
+<style>
+:root{
+    --bg:#f7f3ef;
+    --card:#ffffff;
+    --green:#cde2c7;
+    --green-deep:#5f7f63;
+    --green-soft:#eef7eb;
+    --green-soft-2:#f6fbf4;
+    --text:#3f4a3f;
+    --muted:#7b8278;
+    --line:#e7ebe3;
+    --shadow:0 10px 28px rgba(85, 105, 82, 0.12);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(205,226,199,0.45), transparent 28%),
+        linear-gradient(180deg, #f7f3ef 0%, #f9f6f1 100%);
+    color:var(--text);
+}
+
+.container{
+    max-width:560px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:rgba(255,255,255,0.94);
+    border:1px solid rgba(205,226,199,0.45);
+    border-radius:24px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:var(--shadow);
+    text-align:center;
+}
+
+.header-title{
+    margin:2px 0 8px;
+    font-size:27px;
+    letter-spacing:-0.4px;
+}
+
+.guide{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.55;
+}
+
+.infusion-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:16px;
+    flex-wrap:wrap;
+}
+
+.infusion-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 13px;
+    border-radius:999px;
+    background:var(--green-soft);
+    color:var(--green-deep);
+    font-size:14px;
+    font-weight:700;
+}
+
+.session-mini{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:10px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#fbfaf7;
+    border:1px solid var(--line);
+    color:#8a9187;
+    font-size:11px;
+}
+
+.mini-btn{
+    padding:7px 10px;
+    font-size:12px;
+    border-radius:999px;
+}
+
+.timer{
+    font-size:58px;
+    font-weight:800;
+    letter-spacing:-1px;
+    margin:18px 0 12px;
+    color:#334236;
+}
+
+.progress{
+    height:10px;
+    background:#edf0ea;
+    border-radius:999px;
+    overflow:hidden;
+    margin:8px 0 18px;
+}
+
+.progress-bar{
+    height:100%;
+    width:100%;
+    background:linear-gradient(90deg, #b9d9b5, #d8ecd2);
     border-radius:999px;
     transition:width 0.25s ease;
 }
@@ -601,6 +720,8 @@ function prepareNextInfusionTimer(delay = 650){
     setTimeout(() => {
         totalTime = getCurrentPresetDefaultTime();
         remainingTime = totalTime;
+        infusionAlreadyAdvanced = false;
+        timerStartedForInfusion = false;
         updateTimerUI();
     }, delay);
 }
@@ -710,6 +831,12 @@ function adjustTime(diff){
 
 function startTimer(){
     if(timer) return;
+
+    if(remainingTime <= 0){
+        totalTime = getCurrentPresetDefaultTime();
+        remainingTime = totalTime;
+        updateTimerUI();
+    }
 
     alertBox.innerHTML = "";
     timerStartedForInfusion = true;
@@ -907,7 +1034,7 @@ async function addNote(){
         startNewTeaSession("before-save-tea-name-diff");
         lastTeaNameForSession = teaName;
         saveSessionState();
-        currentInfusion = Math.max(1, currentInfusion);
+        currentInfusion = 1;
         updateInfusionUI();
     }
 
@@ -1050,6 +1177,30 @@ function renderNotes(snapshot){
     });
 }
 
+function startFreshTea(){
+    pauseInternal();
+
+    currentInfusion = 1;
+    measuredInfusionForLog = null;
+    infusionAlreadyAdvanced = false;
+    timerStartedForInfusion = false;
+
+    teaNameInput.value = "";
+    brewTimeInput.value = "";
+    tastingNoteInput.value = "";
+
+    localStorage.setItem("teaName", "");
+    lastTeaNameForSession = "";
+
+    totalTime = getCurrentPresetDefaultTime();
+    remainingTime = totalTime;
+
+    updateInfusionUI();
+    updateTimerUI();
+
+    startNewTeaSession("new-tea-start");
+}
+
 presetList.addEventListener("click", event => {
     const button = event.target.closest(".preset-btn");
     if(!button) return;
@@ -1075,29 +1226,7 @@ increaseInfusionBtn.addEventListener("click", () => {
     updateInfusionUI();
 });
 
-resetInfusionBtn.addEventListener("click", () => {
-    pauseInternal();
-
-    currentInfusion = 1;
-    measuredInfusionForLog = null;
-    infusionAlreadyAdvanced = false;
-    timerStartedForInfusion = false;
-
-    teaNameInput.value = "";
-    brewTimeInput.value = "";
-    tastingNoteInput.value = "";
-
-    localStorage.setItem("teaName", "");
-    lastTeaNameForSession = "";
-
-    totalTime = getCurrentPresetDefaultTime();
-    remainingTime = totalTime;
-
-    updateInfusionUI();
-    updateTimerUI();
-
-    startNewTeaSession("new-tea-start");
-});
+resetInfusionBtn.addEventListener("click", startFreshTea);
 
 nicknameInput.addEventListener("input", savePersistentForm);
 
@@ -1133,122 +1262,3 @@ updateTimerUI();
 
 </body>
 </html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tea Timer 🍵</title>
-
-<style>
-:root{
-    --bg:#f7f3ef;
-    --card:#ffffff;
-    --green:#cde2c7;
-    --green-deep:#5f7f63;
-    --green-soft:#eef7eb;
-    --green-soft-2:#f6fbf4;
-    --text:#3f4a3f;
-    --muted:#7b8278;
-    --line:#e7ebe3;
-    --shadow:0 10px 28px rgba(85, 105, 82, 0.12);
-}
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background:
-        radial-gradient(circle at top left, rgba(205,226,199,0.45), transparent 28%),
-        linear-gradient(180deg, #f7f3ef 0%, #f9f6f1 100%);
-    color:var(--text);
-}
-
-.container{
-    max-width:560px;
-    margin:auto;
-    padding:20px;
-}
-
-.card{
-    background:rgba(255,255,255,0.92);
-    border:1px solid rgba(205,226,199,0.45);
-    border-radius:24px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:var(--shadow);
-    text-align:center;
-    backdrop-filter: blur(6px);
-}
-
-.header-title{
-    margin:2px 0 8px;
-    font-size:27px;
-    letter-spacing:-0.4px;
-}
-
-.guide{
-    margin:0;
-    color:var(--muted);
-    font-size:14px;
-    line-height:1.55;
-}
-
-.infusion-row{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin-top:16px;
-    flex-wrap:wrap;
-}
-
-.infusion-badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:8px 13px;
-    border-radius:999px;
-    background:var(--green-soft);
-    color:var(--green-deep);
-    font-size:14px;
-    font-weight:700;
-}
-
-.session-mini{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    margin-top:10px;
-    padding:6px 10px;
-    border-radius:999px;
-    background:#fbfaf7;
-    border:1px solid var(--line);
-    color:#8a9187;
-    font-size:11px;
-}
-
-.mini-btn{
-    padding:7px 10px;
-    font-size:12px;
-    border-radius:999px;
-}
-
-.timer{
-    font-size:58px;
-    font-weight:800;
-    letter-spacing:-1px;
-    margin:18px 0 12px;
-    color:#334236;
-}
-
-.progress{
-    height:10px;
-    background:#edf0ea;
-    border-radius:999px;
-    overflow:hidden;
-    margin:8px 0 18px;
-}
-
-.progress-bar{
-    height:100%;
-    width:100%;
